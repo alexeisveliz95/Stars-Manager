@@ -2,6 +2,7 @@
     "publicados": [
         "public-apis/public-apis",
         "obra/superpowers",
-        "warpdotdev/warp"
+        "warpdotdev/warp",
+        "mattpocock/skills"
     ]
 }
