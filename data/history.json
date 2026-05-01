@@ -3,6 +3,7 @@
         "public-apis/public-apis",
         "obra/superpowers",
         "warpdotdev/warp",
-        "mattpocock/skills"
+        "mattpocock/skills",
+        "TauricResearch/TradingAgents"
     ]
 }
