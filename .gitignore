@@ -1,0 +1,8 @@
+# Python
+__pycache__/
+*.pyc
+
+# Notas privadas u Obsidian (para el futuro)
+.obsidian/
+*secreto*
+*privado*
