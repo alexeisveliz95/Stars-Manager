@@ -8,7 +8,7 @@ from groq import Groq
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # Usamos FLUX.1-schnell para máxima precisión técnica
-HF_API_URL = "[https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell](https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell)"
+HF_API_URL = "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell"
 
 def generate_visual_prompt(tweet_content):
     client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
@@ -48,7 +48,9 @@ def download_hf_image(visual_prompt, modo):
     
     # Reintentos por si el modelo se está cargando (Cold Start)
     for i in range(3):
-        response = requests.post(HF_API_URL, headers=headers, json=payload)
+        print(f"🔄 Intento {i+1}/3...")
+        response = requests.post(HF_API_URL, headers=headers, json=payload, timeout=60)
+        
         if response.status_code == 200:
             with open(temp_output, 'wb') as f:
                 f.write(response.content)
@@ -56,14 +58,22 @@ def download_hf_image(visual_prompt, modo):
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             history_path = os.path.join(history_dir, f"{timestamp}_{modo}.png")
             shutil.copy2(temp_output, history_path)
-            print(f"✅ Imagen guardada: {history_path}")
+            print(f"✅ Imagen guardada exitosamente en: {history_path}")
             return True
+        
         elif response.status_code == 503:
-            print("⏳ El modelo se está cargando, esperando 10s...")
-            time.sleep(10)
-        else:
-            print(f"❌ Error API HF: {response.status_code} - {response.text}")
+            # El modelo existe pero se está cargando en los servidores de HF
+            print("⏳ Modelo cargándose (503). Esperando 20 segundos para reintentar...")
+            time.sleep(20)
+        
+        elif response.status_code == 404:
+            print(f"❌ Error 404: La URL del modelo es incorrecta o no está disponible en la API gratuita.")
             break
+            
+        else:
+            print(f"❌ Error inesperado ({response.status_code}): {response.text}")
+            break
+            
     return False
 
 def main():
