@@ -7,7 +7,7 @@ from datetime import datetime
 from groq import Groq
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-HF_API_URL = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0"
+HF_API_URL = "https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-schnell"
 
 def generate_visual_prompt(tweet_content):
     client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
