@@ -49,3 +49,6 @@ jobs:
             echo "❌ Error: tweet_list.txt no fue encontrado en la raíz."
             exit 1
           fi
+
+      - name: Debug - List Files
+        run: ls -R
