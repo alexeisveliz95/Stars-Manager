@@ -24,13 +24,13 @@ def generate_visual_prompt(tweet_content):
         "\nSTRICT VISUAL GUIDELINES: "
         "- Background: Solid Deep Navy Blue (#000814). "
         "- Graphics: Precise, ultra-thin white and electric cyan lines. "
-        "- Subject: A symmetrical, clean diagram of nodes, data pathways, or circuit logic.[cite: 2] "
-        "- Aesthetic: High-end software architecture, professional, sharp edges, no blur, no 3D.[cite: 2] "
+        "- Subject: A symmetrical, clean diagram of nodes, data pathways, or circuit logic. "
+        "- Aesthetic: High-end software architecture, professional, sharp edges, no blur, no 3D. "
         "\nINSTRUCTIONS: "
         "1. Start with the chosen style description. "
         "2. Translate the tweet's core concept into a visual technical metaphor. "
-        "3. Add: 'flat vector style, sharp lines, isometric but no perspective distortion, white and cyan on dark navy'.[cite: 2] "
-        "4. NO text, NO people, NO realistic lighting, NO shadows, NO gradients.[cite: 2]"
+        "3. Add: 'flat vector style, sharp lines, isometric but no perspective distortion, white and cyan on dark navy'. "
+        "4. NO text, NO people, NO realistic lighting, NO shadows, NO gradients."
     )
     
     response = client.chat.completions.create(
@@ -48,29 +48,29 @@ def generate_visual_prompt(tweet_content):
 
 def download_hf_image(visual_prompt, modo):
     try:
-        token = os.environ.get("HF_TOKEN")[cite: 2]
+        token = os.environ.get("HF_TOKEN")
         if not token:
-            print("❌ ERROR: La variable HF_TOKEN no está configurada.")[cite: 2]
+            print("❌ ERROR: La variable HF_TOKEN no está configurada.")
             return False
 
-        client = InferenceClient(api_key=token.strip())[cite: 2]
+        client = InferenceClient(api_key=token.strip())
 
-        print(f"📡 Generando imagen con FLUX vía InferenceClient...")[cite: 2]
+        print(f"📡 Generando imagen con FLUX vía InferenceClient...")
         
         # Generación directa con el modelo optimizado
         image = client.text_to_image(
             visual_prompt,
-            model="black-forest-labs/FLUX.1-schnell"[cite: 2]
+            model="black-forest-labs/FLUX.1-schnell"
         )
 
-        # Rutas de guardado consistentes con tu estructura[cite: 2]
+        # Rutas de guardado consistentes con tu estructura
         temp_output = os.path.join(BASE_DIR, f"image_{modo}.png")
         history_dir = os.path.join(BASE_DIR, "data", "history_images")
         os.makedirs(history_dir, exist_ok=True)
 
-        image.save(temp_output)[cite: 2]
+        image.save(temp_output)
         
-        # Historial con timestamp[cite: 2]
+        # Historial con timestamp
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         history_path = os.path.join(history_dir, f"{timestamp}_{modo}.png")
         shutil.copy2(temp_output, history_path)
@@ -79,12 +79,12 @@ def download_hf_image(visual_prompt, modo):
         return True
 
     except Exception as e:
-        print(f"❌ Error con el cliente de Hugging Face: {e}")[cite: 2]
+        print(f"❌ Error con el cliente de Hugging Face: {e}")
         return False
 
 def main():
-    modo = sys.argv[1] if len(sys.argv) > 1 else "single"[cite: 2]
-    input_file = os.path.join(BASE_DIR, f"tweet_{modo}.txt")[cite: 2]
+    modo = sys.argv[1] if len(sys.argv) > 1 else "single"
+    input_file = os.path.join(BASE_DIR, f"tweet_{modo}.txt")
 
     if not os.path.exists(input_file): return
 
