@@ -2,72 +2,63 @@ name: 🚀 Daily Momentum Post
 on:
   schedule:
     - cron: '0 10 * * 1-4'
-  workflow_dispatch: # Permite ejecutarlo manualmente
+  workflow_dispatch:
 
 jobs:
   tweet:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      # 1. GENERAR TEXTO (Basado en el prompt específico para este formato)
       - name: Generate Content
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: python src/agents/writer_agent.py "single"
 
+      # 2. GENERAR IMAGEN (Basada en el texto recién creado)
+      - name: Generate Image
+        if: success()
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python src/agents/image_agent.py "single"
+
+      # 3. PUBLICAR EN X (Con texto e imagen)
       - name: Post to X
+        if: success()
         env:
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
-        run: |
-          if [ -f tweet_single.txt ]; then
-            python src/social/twitter_bot.py "tweet_single.txt"
-          fi
+        run: python src/social/twitter_bot.py "tweet_single.txt"
 
-      - name: Upload Tweet Artifact
+      # 4. SUBIR ARTEFACTO (Para revisión manual en GitHub)
+      - name: Upload Artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: generated-tweet
-          path: tweet_single.txt
+          name: post-assets
+          path: |
+            tweet_single.txt
+            image_single.png
 
-      - name: Save History
-        run: |
-          # 1. Buscamos el archivo específico de este modo
-          if [ -f tweet_single.txt ]; then
-            # 2. Pasamos el mismo nombre al bot de Twitter
-            python src/social/twitter_bot.py "tweet_single.txt"
-          else
-            echo "❌ Error: tweet_single.txt no fue encontrado en la raíz."
-            exit 1
-          fi
-          
-      - name: Debug - List Files
-        run: ls -R
-
-      - name: Generate Content
-        run: python src/agents/writer_agent_2.py "single"
-
-      - name: Generate Image
-        env:
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-        run: python src/agents/image_agent.py "single"
-
-      - name: Post to X
-        run: python src/social/twitter_bot.py "tweet_single.txt" "image_single.png"
-
+      # 5. PERSISTIR HISTORIAL EN EL REPO
+      # Usamos 'always()' para que si el bot falló, al menos guardemos la imagen generada
       - name: Save History to Repo
+        if: always()
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/history_images/*.png
-          # Solo hace commit si hay cambios, para evitar que el workflow falle
-          git diff --quiet && git diff --staged --quiet || (git commit -m "📸 Archivo de imagen: $(date +'%Y-%m-%d %H:%M:%S')" && git push)
+          # Agregamos el historial de imágenes y cualquier cambio en data/
+          git add data/history_images/*.png || true
+          git add data/*.json || true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📸 Archivo de post y assets: $(date +'%Y-%m-%d %H:%M:%S')" && git push)
