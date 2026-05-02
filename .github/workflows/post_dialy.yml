@@ -22,6 +22,7 @@ jobs:
       - name: Generate Content
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: python src/agents/writer_agent.py "single"
 
       # 2. GENERAR IMAGEN (Basada en el texto recién creado)
