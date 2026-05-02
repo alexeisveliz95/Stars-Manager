@@ -1,8 +1,23 @@
+# Secretos
+.env
+
 # Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+venv/
+.venv/
 
-# Notas privadas u Obsidian (para el futuro)
-.obsidian/
-*secreto*
-*privado*
+# Archivos temporales de agentes
+tweet_ready.txt
+tweet_single.txt
+tweet_thread.txt
+tweet_list.txt
+
+# Sistema y editores
+.DS_Store
+.vscode/
+.idea/
+
+# Datos (Descomenta si quieres historial privado)
+# data/history.json
