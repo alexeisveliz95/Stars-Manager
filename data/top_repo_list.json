@@ -1,37 +1,37 @@
 [
     {
-        "name": "mattpocock/skills",
-        "description": "Skills for Real Engineers. Straight from my .claude directory.",
-        "growth": "3645",
-        "stars": "53318",
-        "url": "https://github.com/mattpocock/skills"
-    },
-    {
-        "name": "warpdotdev/warp",
-        "description": "Warp is an agentic development environment, born out of the terminal.",
-        "growth": "3401",
-        "stars": "51917",
-        "url": "https://github.com/warpdotdev/warp"
-    },
-    {
         "name": "TauricResearch/TradingAgents",
         "description": "TradingAgents: Multi-Agents LLM Financial Trading Framework",
-        "growth": "2112",
-        "stars": "60403",
+        "growth": "2227",
+        "stars": "61533",
         "url": "https://github.com/TauricResearch/TradingAgents"
     },
     {
-        "name": "obra/superpowers",
-        "description": "An agentic skills framework & software development methodology that works.",
-        "growth": "1096",
-        "stars": "175931",
-        "url": "https://github.com/obra/superpowers"
+        "name": "ruvnet/ruflo",
+        "description": "\ud83c\udf0a The leading agent orchestration platform for Claude. Deploy intelligent multi-agent swarms, coordinate autonomous workflows, and build conversational AI systems. Features enterprise-grade architecture, distributed swarm intelligence, RAG integration, and native Claude Code / Codex Integration",
+        "growth": "1258",
+        "stars": "36160",
+        "url": "https://github.com/ruvnet/ruflo"
     },
     {
         "name": "soxoj/maigret",
         "description": "\ud83d\udd75\ufe0f\u200d\u2642\ufe0f Collect a dossier on a person by username from 3000+ sites",
-        "growth": "535",
-        "stars": "21947",
+        "growth": "1065",
+        "stars": "22342",
         "url": "https://github.com/soxoj/maigret"
+    },
+    {
+        "name": "jwasham/coding-interview-university",
+        "description": "A complete computer science study plan to become a software engineer.",
+        "growth": "717",
+        "stars": "344340",
+        "url": "https://github.com/jwasham/coding-interview-university"
+    },
+    {
+        "name": "1jehuang/jcode",
+        "description": "Coding Agent Harness",
+        "growth": "482",
+        "stars": "2663",
+        "url": "https://github.com/1jehuang/jcode"
     }
 ]

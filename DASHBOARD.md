@@ -1,5 +1,5 @@
 # 🚀 AI Radar Dashboard
-> 🕒 Última actualización: 2026-05-02 07:41
+> 🕒 Última actualización: 2026-05-02 16:26
 
 ## 📌 Mis Categorías (Curación Personal)
 - [**AI & Data Science**](Categorias/AI_&_Data_Science.md) (59 repos)
@@ -15,6 +15,7 @@
 ---
 ## 📈 Historial de Tendencias
 Consulta los reportes diarios de crecimiento:
+- [2026-05-02](Tendencias/Trending-2026-05-02.md)
 - [2026-05-01](Tendencias/Trending-2026-05-01.md)
 
 
