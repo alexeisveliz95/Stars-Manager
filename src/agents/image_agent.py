@@ -37,9 +37,12 @@ def generate_visual_prompt(tweet_content):
 # Definimos el cliente fuera o dentro de la función
 def download_hf_image(visual_prompt, modo):
     try:
-        client = InferenceClient(
-            api_key=os.environ.get("HF_TOKEN").strip()
-        )
+        token = os.environ.get("HF_TOKEN")
+        if not token:
+            print("❌ ERROR: La variable HF_TOKEN no está configurada en el entorno.")
+            return False
+
+        client = InferenceClient(api_key=token.strip())
 
         print(f"📡 Generando imagen con FLUX vía InferenceClient...")
         
