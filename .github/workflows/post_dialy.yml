@@ -63,3 +63,11 @@ jobs:
 
       - name: Post to X
         run: python src/social/twitter_bot.py "tweet_single.txt" "image_single.png"
+
+      - name: Save History to Repo
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/history_images/*.png
+          # Solo hace commit si hay cambios, para evitar que el workflow falle
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📸 Archivo de imagen: $(date +'%Y-%m-%d %H:%M:%S')" && git push)

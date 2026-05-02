@@ -21,3 +21,11 @@ tweet_list.txt
 
 # Datos (Descomenta si quieres historial privado)
 # data/history.json
+
+# Ignorar imágenes temporales en la raíz
+image_single.png
+image_thread.png
+image_list.png
+
+# PERMITIR el historial de imágenes en data
+!data/history_images/*.png
