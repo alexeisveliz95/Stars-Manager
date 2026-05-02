@@ -52,3 +52,14 @@ jobs:
 
       - name: Debug - List Files
         run: ls -R
+
+      - name: Generate Content
+        run: python src/agents/writer_agent.py "list"
+
+      - name: Generate Image
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python src/agents/image_agent.py "list"
+
+      - name: Post to X
+        run: python src/social/twitter_bot.py "tweet_list.txt" "image_list.png"
