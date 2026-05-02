@@ -1,35 +1,27 @@
-
-name: 🤖 AI Social Agent
-
+name: 🚀 Daily Momentum Post
 on:
   schedule:
-    - cron: '30 8 * * *'
-    - cron: '30 16 * * *'
-  workflow_dispatch: 
-
-permissions:
-  contents: write
+    - cron: '0 10 * * 1-4'
+  workflow_dispatch: # Permite ejecutarlo manualmente
 
 jobs:
-  brain:
+  tweet:
     runs-on: ubuntu-latest
-    
     steps:
-      - uses: actions/checkout@v3
-      
+      - uses: actions/checkout@v4
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.12'
+          python-version: '3.10'
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Generar Contenido Viral
+      - name: Generate Content
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-        run: python src/agents/writer_agent.py 
-        
+        run: python src/agents/writer_agent_2.py "single" # <--- Genera tweet_single.txt
+
       - name: Post to X
         env:
           X_API_KEY: ${{ secrets.X_API_KEY }}
@@ -37,16 +29,15 @@ jobs:
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
         run: |
-          # Solo tuitea si el paso anterior generó el archivo tweet_ready.txt
-          if [ -f tweet_ready.txt ]; then
-            python src/social/twitter_bot.py
+          if [ -f tweet_single.txt ]; then
+            python src/social/twitter_bot.py "tweet_single.txt"
           fi
-      
+
       - name: Upload Tweet Artifact
         uses: actions/upload-artifact@v4
         with:
           name: generated-tweet
-          path: tweet_ready.txt
+          path: tweet_single.txt
 
       - name: Save History
         run: |
