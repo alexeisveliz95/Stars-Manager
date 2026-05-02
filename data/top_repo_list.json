@@ -1,37 +1,37 @@
 [
     {
-        "name": "public-apis/public-apis",
-        "description": "A collective list of free APIs",
-        "growth": "322",
-        "stars": "429769",
-        "url": "https://github.com/public-apis/public-apis"
-    },
-    {
-        "name": "obra/superpowers",
-        "description": "An agentic skills framework & software development methodology that works.",
-        "growth": "1632",
-        "stars": "174915",
-        "url": "https://github.com/obra/superpowers"
+        "name": "mattpocock/skills",
+        "description": "Skills for Real Engineers. Straight from my .claude directory.",
+        "growth": "3645",
+        "stars": "53318",
+        "url": "https://github.com/mattpocock/skills"
     },
     {
         "name": "warpdotdev/warp",
         "description": "Warp is an agentic development environment, born out of the terminal.",
-        "growth": "8399",
-        "stars": "50109",
+        "growth": "3401",
+        "stars": "51917",
         "url": "https://github.com/warpdotdev/warp"
-    },
-    {
-        "name": "mattpocock/skills",
-        "description": "Skills for Real Engineers. Straight from my .claude directory.",
-        "growth": "6187",
-        "stars": "50421",
-        "url": "https://github.com/mattpocock/skills"
     },
     {
         "name": "TauricResearch/TradingAgents",
         "description": "TradingAgents: Multi-Agents LLM Financial Trading Framework",
-        "growth": "2023",
-        "stars": "58292",
+        "growth": "2112",
+        "stars": "60403",
         "url": "https://github.com/TauricResearch/TradingAgents"
+    },
+    {
+        "name": "obra/superpowers",
+        "description": "An agentic skills framework & software development methodology that works.",
+        "growth": "1096",
+        "stars": "175931",
+        "url": "https://github.com/obra/superpowers"
+    },
+    {
+        "name": "soxoj/maigret",
+        "description": "\ud83d\udd75\ufe0f\u200d\u2642\ufe0f Collect a dossier on a person by username from 3000+ sites",
+        "growth": "535",
+        "stars": "21947",
+        "url": "https://github.com/soxoj/maigret"
     }
 ]

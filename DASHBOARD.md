@@ -1,5 +1,5 @@
 # 🚀 AI Radar Dashboard
-> 🕒 Última actualización: 2026-05-01 07:55
+> 🕒 Última actualización: 2026-05-02 07:41
 
 ## 📌 Mis Categorías (Curación Personal)
 - [**AI & Data Science**](Categorias/AI_&_Data_Science.md) (59 repos)
@@ -7,7 +7,7 @@
 - [**Cybersecurity & Hacking**](Categorias/Cybersecurity_&_Hacking.md) (5 repos)
 - [**Mobile Development**](Categorias/Mobile_Development.md) (3 repos)
 - [**Otros**](Categorias/Otros.md) (19 repos)
-- [**PlayStation Homebrew & Linux**](Categorias/PlayStation_Homebrew_&_Linux.md) (2 repos)
+- [**PlayStation Homebrew & Linux**](Categorias/PlayStation_Homebrew_&_Linux.md) (3 repos)
 - [**Python & Backend**](Categorias/Python_&_Backend.md) (4 repos)
 - [**Web Development**](Categorias/Web_Development.md) (4 repos)
 - [**Web3 & Blockchain**](Categorias/Web3_&_Blockchain.md) (5 repos)
@@ -19,4 +19,4 @@ Consulta los reportes diarios de crecimiento:
 
 
 ## 📈 Último Análisis de Tendencias
-- [Ver tendencias del 2026-05-01](Tendencias/Trending-2026-05-01.md)
+- [Ver tendencias del 2026-05-02](Tendencias/Trending-2026-05-02.md)
