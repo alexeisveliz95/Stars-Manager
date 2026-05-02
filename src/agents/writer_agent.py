@@ -82,11 +82,15 @@ def main():
     selected_repo_name = None
 
     for repo in repos:
+
         if repo['name'] not in history['publicados']:
-            print(f"🧠 Groq analizando: {repo['name']}...")
+            # Elegimos una personalidad diferente cada vez
+            estrategias = ["momentum", "deep_dive", "viral_list"]
+            selected_strategy = random.choice(estrategias)
+            print(f"🧠 Groq analizando '{repo['name']}' con estrategia: {selected_strategy}...")
+            
             try:
-                estrategias = ["momentum", "deep_dive", "viral_list"]
-                selected_strategy = random.choice(estrategias)
+                # Pasamos la estrategia a tu función de IA evolucionada
                 tweet_text = generate_tweet_with_ai(repo, selected_strategy)
                 selected_repo_name = repo['name']
                 break
