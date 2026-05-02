@@ -36,7 +36,10 @@ def generate_visual_prompt(tweet_content):
     return response.choices[0].message.content.strip()
 
 def download_hf_image(visual_prompt, modo):
-    headers = {"Authorization": f"Bearer {os.environ.get('HF_TOKEN')}"}
+    headers = {
+        "Authorization": f"Bearer {os.environ.get('HF_TOKEN').strip()}",
+        "Content-Type": "application/json"
+    }
     payload = {"inputs": visual_prompt}
     
     temp_output = os.path.join(BASE_DIR, f"image_{modo}.png")
@@ -59,19 +62,22 @@ def download_hf_image(visual_prompt, modo):
             shutil.copy2(temp_output, history_path)
             print(f"✅ Imagen guardada exitosamente en: {history_path}")
             return True
-        
-        elif response.status_code == 503:
-            # El modelo existe pero se está cargando en los servidores de HF
-            print("⏳ Modelo cargándose (503). Esperando 20 segundos para reintentar...")
-            time.sleep(20)
-        
-        elif response.status_code == 404:
-            print(f"❌ Error 404: La URL del modelo es incorrecta o no está disponible en la API gratuita.")
-            break
-            
         else:
-            print(f"❌ Error inesperado ({response.status_code}): {response.text}")
-            break
+            print(f"❌ Error {response.status_code}")
+            print(f"📝 Detalles: {response.text}")
+        
+            if response.status_code == 503:
+                # El modelo existe pero se está cargando en los servidores de HF
+                print("⏳ Modelo cargándose (503). Esperando 20 segundos para reintentar...")
+                time.sleep(20)
+            
+            elif response.status_code == 404:
+                print(f"❌ Error 404: La URL del modelo es incorrecta o no está disponible en la API gratuita.")
+                break
+                
+            else:
+                print(f"❌ Error inesperado ({response.status_code}): {response.text}")
+                break
             
     return False
 
