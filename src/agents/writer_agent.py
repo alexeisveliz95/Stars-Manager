@@ -62,20 +62,27 @@ def generate_tweet_with_ai(repo, tipo_estrategia="momentum"):
 
 def main():
     # 1. Cargar tendencias
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    trends_path = os.path.join(BASE_DIR, "data", "top_repo_list.json")
+    history_path = os.path.join(BASE_DIR, "data", "history.json")
+    output_path = os.path.join(BASE_DIR, "data", "tweet_ready.txt")
+
     try:
-        with open("top_repo_list.json", "r", encoding="utf-8") as f:
+        with open(trends_path, "r", encoding="utf-8") as f:
             repos = json.load(f)
     except FileNotFoundError:
-        print("❌ No se encontró el archivo de tendencias.")
+        print(f"❌ No se encontró el archivo de tendencias en: {trends_path}")
         return
-
-    # 2. Cargar historial
-    history_path = "data/history.json"
+    
+    # 2. Cargar historial    
     if os.path.exists(history_path):
         with open(history_path, "r", encoding="utf-8") as f:
             history = json.load(f)
     else:
+        # Aseguramos que la carpeta data exista si no hay historial
+        os.makedirs(os.path.join(BASE_DIR, "data"), exist_ok=True)
         history = {"publicados": []}
+    
 
     # 3. Lógica de selección
     tweet_text = None
@@ -101,20 +108,18 @@ def main():
     
     # 4. Guardar para el bot de Twitter
     if tweet_text:
-        with open("tweet_ready.txt", "w", encoding="utf-8") as f:
-            # Limpiar posibles comillas que a veces pone la IA
+        with open(output_path, "w", encoding="utf-8") as f:
             f.write(tweet_text.replace('"', ''))
-        
+
         print("--- CONTENIDO DEL TWEET GENERADO ---")
         print(tweet_text)
         print("------------------------------------")
-        
+               
         history['publicados'].append(selected_repo_name)
+        # Guardar historial actualizado
         with open(history_path, "w", encoding="utf-8") as f:
             json.dump(history, f, indent=4)
-        print("✅ Tweet generado con éxito por Groq.")
-    else:
-        print("ℹ️ Nada nuevo por hoy.")
+        print(f"✅ Tweet generado y guardado en {output_path}")
 
 if __name__ == "__main__":
     main()
