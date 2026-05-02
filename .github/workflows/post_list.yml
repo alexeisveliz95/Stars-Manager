@@ -1,11 +1,11 @@
-name: 🚀 Daily Momentum Post
+name: 📊 Friday Top List
 on:
   schedule:
-    - cron: '0 10 * * 1-4'
-  workflow_dispatch: # Permite ejecutarlo manualmente
+    - cron: '0 17 * * 5'
+  workflow_dispatch:
 
 jobs:
-  tweet:
+  list:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,10 +17,10 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Generate Content
+      - name: Generate List
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-        run: python src/agents/writer_agent.py "single"
+        run: python src/agents/writer_agent.py "list"
 
       - name: Post to X
         env:
@@ -29,15 +29,15 @@ jobs:
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
         run: |
-          if [ -f tweet_single.txt ]; then
-            python src/social/twitter_bot.py "tweet_single.txt"
+          if [ -f tweet_list.txt ]; then
+            python src/social/twitter_bot.py "tweet_list.txt"
           fi
 
       - name: Upload Tweet Artifact
         uses: actions/upload-artifact@v4
         with:
           name: generated-tweet
-          path: tweet_single.txt
+          path: tweet_list.txt
 
       - name: Save History
         run: |
