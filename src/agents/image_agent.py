@@ -2,90 +2,80 @@ import os
 import sys
 import requests
 import urllib.parse
+import shutil
 from datetime import datetime
 from groq import Groq
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-HISTORY_DIR = os.path.join(BASE_DIR, "data", "history_images")
 
 def generate_visual_prompt(tweet_content):
-    """Convierte el tweet en un prompt artístico para la IA de imagen"""
     client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
     
+    # SYSTEM PROMPT: El "ADN" visual de tus imágenes
     system_prompt = (
-        "Eres un diseñador de planos técnicos (Blueprints) y arquitectura minimalista. "
-        "Tu objetivo es crear un prompt de imagen que represente software de forma estructural. "
-        "\nESTILO VISUAL OBLIGATORIO: "
-        "- Fondo: Azul profundo de plano técnico (Navy Blueprint) o Negro mate de ingeniería. "
-        "- Elementos: Líneas blancas finas, diagramas de flujo isométricos, cuadrículas milimétricas (grids). "
-        "- Estética: Minimalista, técnica, limpia, tipo esquema de patentes o diagramas de sistemas de alta precisión. "
-        "\nREGLAS DE COMPOSICIÓN: "
-        "1. Usa metáforas geométricas: cubos para bases de datos, nodos para agentes, capas para frameworks. "
-        "2. Evita efectos de brillo excesivo, nada de 'cyberpunk', nada de personas. "
-        "3. El prompt debe ser en INGLÉS y empezar con: 'A technical minimalist blueprint of...' "
-        "4. Incluye términos como: 'fine white lines', 'technical drawing', 'isometric schematic', 'blueprint aesthetic'."
+        "You are a high-end technical illustrator specialized in minimalist blueprints. "
+        "Your goal is to create a visual prompt for a technical drawing. "
+        "\nVISUAL STYLE: "
+        "- Background: Deep Navy Blue (hex #001122). "
+        "- Lines: Ultra-thin, crisp white and cyan lines. "
+        "- Subject: A minimalist isometric schematic of software architecture, nodes, or data structures. "
+        "- Aesthetics: Professional, clean, engineering precision, technical annotations, grid system. "
+        "\nRULES: "
+        "1. Start with: 'A technical minimalist blueprint of...' "
+        "2. Focus on structural geometric shapes. "
+        "3. NO glows, NO neon, NO people, NO text. "
+        "4. Everything in ENGLISH."
     )
     
     response = client.chat.completions.create(
         model='llama-3.3-70b-versatile',
         messages=[
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": f"Resume este tweet en un prompt visual de 20 palabras: {tweet_content}"}
+            {"role": "user", "content": f"Create a technical blueprint prompt for: {tweet_content}"}
         ]
     )
     return response.choices[0].message.content.strip()
 
-def download_image(visual_prompt, output_path):
-    """Descarga la imagen desde Pollinations.ai usando el prompt generado"""
-    # Codificamos el prompt para que sea seguro en una URL
+def download_and_persist(visual_prompt, modo):
+    """Descarga la imagen y la guarda tanto para el bot como para el historial"""
     encoded_prompt = urllib.parse.quote(visual_prompt)
-    # Usamos parámetros para mejorar la calidad y evitar texto
-    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1024&height=1024&nologo=true&enhance=true"
+    url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?width=1024&height=1024&nologo=true&enhance=true"
     
-    print(f"📡 Solicitando imagen a Pollinations...")
-    response = requests.get(image_url)
+    # Rutas
+    temp_output = os.path.join(BASE_DIR, f"image_{modo}.png")
+    history_dir = os.path.join(BASE_DIR, "data", "history_images")
+    os.makedirs(history_dir, exist_ok=True)
     
-    if response.status_code == 200:
-        with open(output_path, 'wb') as f:
-            f.write(response.content)
+    print(f"📡 Generando imagen con estilo Blueprint Navy...")
+    res = requests.get(url)
+    
+    if res.status_code == 200:
+        # Guardar archivo temporal para el bot de Twitter
+        with open(temp_output, 'wb') as f:
+            f.write(res.content)
+            
+        # Guardar en historial con timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        history_path = os.path.join(history_dir, f"{timestamp}_{modo}.png")
+        shutil.copy2(temp_output, history_path)
+        
+        print(f"✅ Imagen lista para Twitter: {temp_output}")
+        print(f"📁 Imagen guardada en historial: {history_path}")
         return True
     return False
 
 def main():
-    os.makedirs(HISTORY_DIR, exist_ok=True) # Asegurar que la carpeta existe
-    modo = sys.argv[1] if len(sys.argv) > 1 else "single"
-    
-    # Nombre temporal para el bot de Twitter
-    temp_output = os.path.join(BASE_DIR, f"image_{modo}.png")
-
     modo = sys.argv[1] if len(sys.argv) > 1 else "single"
     input_file = os.path.join(BASE_DIR, f"tweet_{modo}.txt")
-    output_image = os.path.join(BASE_DIR, f"image_{modo}.png")
 
     if not os.path.exists(input_file):
-        print(f"❌ No existe el archivo: {input_file}")
         return
 
     with open(input_file, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # 1. Generar prompt visual con Llama
     v_prompt = generate_visual_prompt(content)
-    print(f"🎨 Prompt visual: {v_prompt}")
-
-    # 2. Descargar la imagen
-    if download_image(v_prompt, output_image):
-        print(f"✅ Imagen guardada: {output_image}")
-    else:
-        print("❌ Error al descargar la imagen.")
-
-    if download_image(v_prompt, temp_output):
-        # COPIA DE SEGURIDAD INMEDIATA
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        history_path = os.path.join(HISTORY_DIR, f"{timestamp}_{modo}.png")
-        import shutil
-        shutil.copy(temp_output, history_path)
-        print(f"✅ Imagen guardada en temporal y en histórico: {history_path}")
+    download_and_persist(v_prompt, modo)
 
 if __name__ == "__main__":
     main()
