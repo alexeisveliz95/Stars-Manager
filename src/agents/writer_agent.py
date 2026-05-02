@@ -119,6 +119,10 @@ def main():
         # Guardamos en la raíz para que el bot de Twitter lo vea fácilmente
         with open(output_path, "w", encoding="utf-8") as f:
             f.write(tweet_text.replace('"', ''))
+
+        print("--- CONTENIDO DEL TWEET GENERADO ---")
+        print(tweet_text)
+        print("------------------------------------")
         
         history['publicados'].append(selected_repo_name)
 
