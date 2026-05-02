@@ -1,30 +1,50 @@
 import json
 import os
+import random
 from groq import Groq
 
-def generate_tweet_with_ai(repo):
-    # 1. Crear el cliente centralizado
-    client = Groq(api_key=os.environ.get("AI_API_KEY"))
-    
+def generate_tweet_with_ai(repo, tipo_estrategia="momentum"):
+    client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+    # Dentro del loop de repos en main()
+
+    # 1. Definimos las plantillas basadas en tu documento "Stars-Manager"
+    if tipo_estrategia == "deep_dive":
+        template = (
+            f"Estrategia: DEEP DIVE.\n"
+            f"Estructura: Gancho de impacto sobre borrar herramientas antiguas + beneficios concretos.\n"
+            f"Repo: {repo['name']} - {repo['description']}\n"
+        )
+    elif tipo_estrategia == "viral_list":
+        template = (
+            f"Estrategia: TOP SEMANAL.\n"
+            f"Estructura: 'Los repos que están explotando' + métricas de momentum.\n"
+            f"Repo: {repo['name']} - {repo['description']}\n"
+        )
+    else: # Momentum / Utility
+        template = (
+            f"Estrategia: MOMENTUM[cite: 1].\n"
+            f"Estructura: Gancho increíble + utilidad técnica inmediata[cite: 1].\n"
+            f"Repo: {repo['name']} - {repo['description']}\n"
+        )
+
     prompt = [
+        {
+            "role": "system",
+            "content": "Eres un Tech Influencer experto en crecimiento orgánico en X. Tu objetivo es llegar a 10k seguidores[cite: 1]."
+        },
         {
             "role": "user",
             "content": (
-                f"Actúa como un experto en tecnología. Crea un hilo de 2 posts para X sobre el repo: {repo['name']}.\n\n"
-                f"POST 1: Un gancho (hook) increíble sobre la utilidad del repo. Sin links. Máximo 250 caracteres.\n"
-                f"POST 2: Una frase corta de invitación y el link: {repo['url']}\n\n"
-                f"SEPARA LOS POSTS CON EL SÍMBOLO '---'.\n"
-                f"REGLAS:\n"
-                f"- Tono humano y técnico.\n"
-                f"- Descripción: {repo['description']}"
+                f"{template}\n"
+                f"POST 1: Hook viral (máx 250 carac). Sin links. Usa emojis estratégicos[cite: 1].\n"
+                f"POST 2: Valor técnico + Link: {repo['url']} + CTA (Call to Action)[cite: 1].\n"
+                f"SEPARA CON '---'. REGLAS: Tono humano, cero robots, lenguaje para devs[cite: 1]."
             )
         }
     ]
 
-
-    #  Llamada a la API usando el nuevo método
+    # Mantenemos tu lógica de reintentos con Qwen si falla Llama
     try:
-        # Probamos con el nombre limpio (sin prefijos)
         response = client.chat.completions.create(
             model='llama-3.3-70b-versatile', 
             messages=prompt
@@ -32,13 +52,13 @@ def generate_tweet_with_ai(repo):
         return response.choices[0].message.content.strip()
     
     except Exception as e:
-        # Si falla, intentamos con la versión específica que nunca falla
-        print(f"⚠️ Reintentando con versión específica por error: {e}")
+        print(f"⚠️ Reintentando con Qwen por error: {e}")
         response = client.chat.completions.create(
             model='qwen/qwen3-32b', 
             messages=prompt
         )
         return response.choices[0].message.content.strip()
+
 
 def main():
     # 1. Cargar tendencias
@@ -65,7 +85,9 @@ def main():
         if repo['name'] not in history['publicados']:
             print(f"🧠 Groq analizando: {repo['name']}...")
             try:
-                tweet_text = generate_tweet_with_ai(repo)
+                estrategias = ["momentum", "deep_dive", "viral_list"]
+                selected_strategy = random.choice(estrategias)
+                tweet_text = generate_tweet_with_ai(repo, selected_strategy)
                 selected_repo_name = repo['name']
                 break
             except Exception as e:
@@ -73,7 +95,6 @@ def main():
                 continue
 
     
-
     # 4. Guardar para el bot de Twitter
     if tweet_text:
         with open("tweet_ready.txt", "w", encoding="utf-8") as f:
