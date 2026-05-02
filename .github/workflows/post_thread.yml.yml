@@ -12,7 +12,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -41,16 +41,11 @@ jobs:
 
       - name: Save History
         run: |
-          git config --local user.email "agent@github.com"
-          git config --local user.name "AI Social Agent"
-          
-          # Añadimos todos los cambios en la carpeta data (o donde guardes el historial)
-          git add data/*.json || echo "No hay cambios en el historial"
-          
-          # Solo hacemos commit si hay algo en el 'staging area'
-          if ! git diff --cached --quiet; then
-            git commit -m "Update tweet history [skip ci]"
-            git push
+          # 1. Buscamos el archivo específico de este modo
+          if [ -f tweet_thread.txt ]; then
+            # 2. Pasamos el mismo nombre al bot de Twitter
+            python src/social/twitter_bot.py "tweet_thread.txt"
           else
-            echo "Nada que actualizar hoy."
+            echo "❌ Error: tweet_thread.txt no fue encontrado en la raíz."
+            exit 1
           fi
