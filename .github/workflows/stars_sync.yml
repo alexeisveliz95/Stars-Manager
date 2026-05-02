@@ -28,7 +28,7 @@ jobs:
       env:
         STARS_TOKEN: ${{ secrets.STARS_TOKEN }}
         GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-      run: python main.py
+      run: python src/main.py
       
     - name: Commit y Push
       run: |

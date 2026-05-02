@@ -28,7 +28,7 @@ jobs:
       - name: Process & Write
         env:
           AI_API_KEY: ${{ secrets.AI_API_KEY }}
-        run: python agents/writer_agent.py
+        run: python src/agents/writer_agent.py
         
       - name: Post to X
         env:
@@ -39,7 +39,7 @@ jobs:
         run: |
           # Solo tuitea si el paso anterior generó el archivo tweet_ready.txt
           if [ -f tweet_ready.txt ]; then
-            python social/twitter_bot.py
+            python src/social/twitter_bot.py
           fi
       
       - name: Upload Tweet Artifact

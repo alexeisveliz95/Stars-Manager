@@ -1,4 +1,3 @@
-# src/agents/scout_agent.py
 import os
 import requests
 from groq import Groq
