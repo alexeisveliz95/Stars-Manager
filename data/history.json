@@ -1,7 +1,11 @@
 {
     "publicados": [
+<<<<<<< HEAD
         "ruvnet/ruflo",
         "TauricResearch/TradingAgents",
         "jwasham/coding-interview-university"
+=======
+        
+>>>>>>> 44bf7c0 (fix: Actualizar la función download_hf_image para usar InferenceClient y mejorar el manejo de imágenes)
     ]
 }

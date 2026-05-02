@@ -1,13 +1,11 @@
 import os
 import sys
-import requests
 import shutil
-import time
 from datetime import datetime
 from groq import Groq
+from huggingface_hub import InferenceClient
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-HF_API_URL = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5"
 
 def generate_visual_prompt(tweet_content):
     client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
@@ -35,51 +33,42 @@ def generate_visual_prompt(tweet_content):
     )
     return response.choices[0].message.content.strip()
 
-def download_hf_image(visual_prompt, modo):
-    headers = {
-        "Authorization": f"Bearer {os.environ.get('HF_TOKEN').strip()}",
-        "Content-Type": "application/json"
-    }
-    payload = {"inputs": visual_prompt}
-    
-    temp_output = os.path.join(BASE_DIR, f"image_{modo}.png")
-    history_dir = os.path.join(BASE_DIR, "data", "history_images")
-    os.makedirs(history_dir, exist_ok=True)
 
-    print(f"📡 Solicitando imagen a Hugging Face (FLUX)...")
-    
-    # Reintentos por si el modelo se está cargando (Cold Start)
-    for i in range(3):
-        print(f"🔄 Intento {i+1}/3...")
-        response = requests.post(HF_API_URL, headers=headers, json=payload, timeout=60)
+# Definimos el cliente fuera o dentro de la función
+def download_hf_image(visual_prompt, modo):
+    try:
+        client = InferenceClient(
+            api_key=os.environ.get("HF_TOKEN").strip()
+        )
+
+        print(f"📡 Generando imagen con FLUX vía InferenceClient...")
         
-        if response.status_code == 200:
-            with open(temp_output, 'wb') as f:
-                f.write(response.content)
-            
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            history_path = os.path.join(history_dir, f"{timestamp}_{modo}.png")
-            shutil.copy2(temp_output, history_path)
-            print(f"✅ Imagen guardada exitosamente en: {history_path}")
-            return True
-        else:
-            print(f"❌ Error {response.status_code}")
-            print(f"📝 Detalles: {response.text}")
+        # El método text_to_image devuelve un objeto PIL Image
+        # Usamos FLUX.1-schnell que es gratuito y rápido para la API
+        image = client.text_to_image(
+            visual_prompt,
+            model="black-forest-labs/FLUX.1-schnell"
+        )
+
+        # Rutas de guardado
+        temp_output = os.path.join(BASE_DIR, f"image_{modo}.png")
+        history_dir = os.path.join(BASE_DIR, "data", "history_images")
+        os.makedirs(history_dir, exist_ok=True)
+
+        # Guardar la imagen usando el método de PIL
+        image.save(temp_output)
         
-            if response.status_code == 503:
-                # El modelo existe pero se está cargando en los servidores de HF
-                print("⏳ Modelo cargándose (503). Esperando 20 segundos para reintentar...")
-                time.sleep(20)
-            
-            elif response.status_code == 404:
-                print(f"❌ Error 404: La URL del modelo es incorrecta o no está disponible en la API gratuita.")
-                break
-                
-            else:
-                print(f"❌ Error inesperado ({response.status_code}): {response.text}")
-                break
-            
-    return False
+        # Copiar al historial
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        history_path = os.path.join(history_dir, f"{timestamp}_{modo}.png")
+        shutil.copy2(temp_output, history_path)
+        
+        print(f"✅ Imagen guardada exitosamente.")
+        return True
+
+    except Exception as e:
+        print(f"❌ Error con el cliente de Hugging Face: {e}")
+        return False
 
 def main():
     modo = sys.argv[1] if len(sys.argv) > 1 else "single"
