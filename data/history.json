@@ -3,6 +3,7 @@
         "soxoj/maigret",
         "TauricResearch/TradingAgents",
         "obra/superpowers",
-        "warpdotdev/warp"
+        "warpdotdev/warp",
+        "mattpocock/skills"
     ]
 }
