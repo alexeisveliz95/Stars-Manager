@@ -25,10 +25,10 @@ jobs:
       - name: Install dependencies
         run: pip install groq tweepy
 
-      - name: Process & Write
+      - name: Generar Contenido Viral
         env:
-          AI_API_KEY: ${{ secrets.AI_API_KEY }}
-        run: python src/agents/writer_agent.py
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python src/agents/writer_agent.py 
         
       - name: Post to X
         env:
