@@ -46,7 +46,6 @@ ESTILOS_VISUALES = {
 }
 
 VISUAL_IDENTITY = (
-    "cinematic technical art, Liquid metal mercury flow, "
     "deep navy blue obsidian background, Frosted glass textures,"
     "volumetric lighting, subtle bloom effect, high-end digital render, "
     "Fibonacci spiral arrangement, clean composition, "
