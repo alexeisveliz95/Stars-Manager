@@ -60,3 +60,6 @@ CATEGORIES_DB = {
         "android", "ios", "flutter", "react-native", "swift", "kotlin"
     ],
 }
+
+# Keywords para trabajar con otros modulos posterriormente
+ALL_KEYWORDS = [keyword for keywords in CATEGORIES_DB.values() for keyword in keywords]
