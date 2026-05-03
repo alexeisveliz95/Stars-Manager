@@ -26,9 +26,25 @@ def post_content(file_name):
     access_token = os.getenv("X_ACCESS_TOKEN")
     access_token_secret = os.getenv("X_ACCESS_TOKEN_SECRET")
 
+    # Validación temprana de credenciales — error claro antes de llegar a tweepy
+    missing = [k for k, v in {
+        "X_API_KEY": api_key, "X_API_SECRET": api_secret,
+        "X_ACCESS_TOKEN": access_token, "X_ACCESS_TOKEN_SECRET": access_token_secret
+    }.items() if not v]
+    if missing:
+        print(f"❌ Faltan secrets en GitHub Actions: {', '.join(missing)}")
+        return
+
     auth = tweepy.OAuth1UserHandler(api_key, api_secret, access_token, access_token_secret)
     api_v1 = tweepy.API(auth)
-    client_v2 = tweepy.Client(api_key, api_secret, access_token, access_token_secret)
+    # IMPORTANTE: tweepy.Client recibe kwargs, no args posicionales.
+    # El primer arg posicional es bearer_token — usar siempre kwargs explícitos.
+    client_v2 = tweepy.Client(
+        consumer_key=api_key,
+        consumer_secret=api_secret,
+        access_token=access_token,
+        access_token_secret=access_token_secret,
+    )
 
     try:
         # 3. Subir Imagen
@@ -37,7 +53,7 @@ def post_content(file_name):
             print(f"📸 Subiendo imagen: {image_name}")
             media = api_v1.media_upload(filename=IMAGE_FILE)
             media_id = media.media_id_string
-        
+
         # 4. Leer y Publicar Texto
         with open(TWEET_FILE, "r", encoding="utf-8") as f:
             content = f.read()
@@ -49,7 +65,14 @@ def post_content(file_name):
             client_v2.create_tweet(text=parts[0], media_ids=media_ids)
         else:
             first_tweet = client_v2.create_tweet(text=parts[0], media_ids=media_ids)
-            client_v2.create_tweet(text=parts[1], in_reply_to_tweet_id=first_tweet.data['id'])
+            # Guard: solo publicar la segunda parte si la primera fue exitosa
+            if first_tweet and first_tweet.data:
+                client_v2.create_tweet(
+                    text=parts[1],
+                    in_reply_to_tweet_id=first_tweet.data['id']
+                )
+            else:
+                print("⚠️ Primera parte del hilo no devolvió ID — segunda parte no publicada.")
 
         print(f"✅ Publicación de {file_name} exitosa.")
 
