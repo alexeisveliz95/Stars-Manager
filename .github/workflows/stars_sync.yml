@@ -38,4 +38,7 @@ jobs:
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add data/*.json
-        git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 Sync semanal: pool de repos actualizado $(date +'%Y-%m-%d')" && git push)
+        git add DASHBOARD.md || true
+        git add Categorias/ || true
+        git add Tendencias/ || true
+        git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 Sync semanal: repos + reportes actualizados $(date +'%Y-%m-%d')" && git push)
