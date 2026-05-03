@@ -1,9 +1,21 @@
 # 📂 Web3 & Blockchain
 
-| Proyecto | Estrellas | Descripción | Link |
-| :--- | :--- | :--- | :--- |
-| **freqtrade** | ⭐ 49,664 | Free, open source crypto trading bot | [🔗](https://github.com/freqtrade/freqtrade) |
-| **hummingbot** | ⭐ 18,439 | Open source software that helps you create and deploy high-frequency crypto trading bots | [🔗](https://github.com/hummingbot/hummingbot) |
-| **opentrader** | ⭐ 2,421 | Open-source crypto trading bot -  DCA & GRID strategies -  UI -  Star to support the project! | [🔗](https://github.com/Open-Trader/opentrader) |
-| **tvscreener** | ⭐ 1,018 | TradingView Screener API - Stock, Crypto, Forex, Bond, Futures, Coin | [🔗](https://github.com/deepentropy/tvscreener) |
-| **polyterm** | ⭐ 233 | Polymarket in your terminal. | [🔗](https://github.com/NYTEMODEONLY/polyterm) |
+> [!info] Resumen
+> **4 repos** curados · ⭐ Top: **49.7k** · Acumulado: **71.6k** estrellas · Actualizado: `2026-05-03`
+
+---
+
+## 🔥 Popular
+
+| Proyecto | ⭐ Stars | Descripción |
+| :--- | ---: | :--- |
+| [**freqtrade**](https://github.com/freqtrade/freqtrade) | 49.7k | Free, open source crypto trading bot |
+| [**hummingbot**](https://github.com/hummingbot/hummingbot) | 18.4k | Open source software that helps you create and deploy high-frequency crypto trading bots |
+
+## ⭐ Notable
+
+| Proyecto | ⭐ Stars | Descripción |
+| :--- | ---: | :--- |
+| [**opentrader**](https://github.com/Open-Trader/opentrader) | 2.4k | Open-source crypto trading bot -  DCA & GRID strategies -  UI -  Star to support the… |
+| [**tvscreener**](https://github.com/deepentropy/tvscreener) | 1.0k | TradingView Screener API - Stock, Crypto, Forex, Bond, Futures, Coin |
+

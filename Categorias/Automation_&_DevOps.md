@@ -1,10 +1,25 @@
 # 📂 Automation & DevOps
 
-| Proyecto | Estrellas | Descripción | Link |
-| :--- | :--- | :--- | :--- |
-| **uptime-kuma** | ⭐ 86,134 | A fancy self-hosted monitoring tool | [🔗](https://github.com/louislam/uptime-kuma) |
-| **n8n-workflows** | ⭐ 54,064 | all of the workflows of n8n i could find (also from the site itself) | [🔗](https://github.com/Zie619/n8n-workflows) |
-| **pyautogui** | ⭐ 12,468 | A cross-platform GUI automation Python module for human beings. Used to programmatically control the mouse & keyboard. | [🔗](https://github.com/asweigart/pyautogui) |
-| **PokemonStudio** | ⭐ 196 | Pokmon Studio is a monster taming game editor which helps you to bring your ideas to life, in just a few clicks. | [🔗](https://github.com/PokemonWorkshop/PokemonStudio) |
-| **poke-cli** | ⭐ 174 | A hybrid CLI/TUI tool written in Go for viewing Pokmon data from the terminal! Also doubles as a Data Engineering project. | [🔗](https://github.com/digitalghost-dev/poke-cli) |
-| **cli** | ⭐ 148 | A command-line tool to give your agents access to any app, create workflows and manage your One account. | [🔗](https://github.com/withoneai/cli) |
+> [!info] Resumen
+> **8 repos** curados · ⭐ Top: **86.2k** · Acumulado: **100.1k** estrellas · Actualizado: `2026-05-03`
+
+---
+
+## 🔥 Popular
+
+| Proyecto | ⭐ Stars | Descripción |
+| :--- | ---: | :--- |
+| [**uptime-kuma**](https://github.com/louislam/uptime-kuma) | 86.2k | A fancy self-hosted monitoring tool |
+| [**pyautogui**](https://github.com/asweigart/pyautogui) | 12.5k | A cross-platform GUI automation Python module for human beings. Used to programmatically… |
+
+## 🌱 Emerging
+
+| Proyecto | ⭐ Stars | Descripción |
+| :--- | ---: | :--- |
+| [**Google-Maps-Scrapper**](https://github.com/zohaibbashir/Google-Maps-Scrapper) | 586 | This code is used to perform web scraping and data extraction from Google Maps. It is… |
+| [**MikroDash**](https://github.com/SecOps-7/MikroDash) | 345 | Real-time MikroTik RouterOS v7 dashboard. Streams live CPU, traffic, wireless clients,… |
+| [**polyterm**](https://github.com/NYTEMODEONLY/polyterm) | 235 | Polymarket in your terminal. |
+| [**poke-cli**](https://github.com/digitalghost-dev/poke-cli) | 174 | A hybrid CLI/TUI tool written in Go for viewing Pokmon data from the terminal! Also… |
+| [**cli**](https://github.com/withoneai/cli) | 149 | A command-line tool to give your agents access to any app, create workflows and manage… |
+| [**ultimateXnova**](https://github.com/ultimateXnova/ultimateXnova) | 17 | A fork of the php-based browsergame steemnova with the goal to modernize the UI and UX… |
+

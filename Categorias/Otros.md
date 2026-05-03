@@ -1,23 +1,57 @@
 # 📂 Otros
 
-| Proyecto | Estrellas | Descripción | Link |
-| :--- | :--- | :--- | :--- |
-| **Python** | ⭐ 220,627 | All Algorithms implemented in Python | [🔗](https://github.com/TheAlgorithms/Python) |
-| **superpowers** | ⭐ 176,321 | An agentic skills framework & software development methodology that works. | [🔗](https://github.com/obra/superpowers) |
-| **interview-company-wise-problems** | ⭐ 23,291 | Lists of company wise questions. Every csv file in the companies directory corresponds to a list of questions on leetcode for a specific company based on the leetcode company tags. Updated as of 20 June, 2025 | [🔗](https://github.com/liquidslr/interview-company-wise-problems) |
-| **Kronos** | ⭐ 22,467 | Kronos: A Foundation Model for the Language of Financial Markets | [🔗](https://github.com/shiyu-coder/Kronos) |
-| **hello-git** | ⭐ 13,978 | Curso para aprender a trabajar con el sistema de control de versiones Git y la plataforma GitHub desde cero y para principiantes. | [🔗](https://github.com/mouredev/hello-git) |
-| **watchdog** | ⭐ 7,328 | Python library and shell utilities to monitor filesystem events. | [🔗](https://github.com/gorakhargosh/watchdog) |
-| **pdf-craft** | ⭐ 5,430 | PDF craft can convert PDF files into various other formats. This project will focus on processing PDF files of scanned books. | [🔗](https://github.com/oomol-lab/pdf-craft) |
-| **py4fi2nd** | ⭐ 2,191 | Jupyter Notebooks and code for Python for Finance (2nd ed., O'Reilly) by Yves Hilpisch. | [🔗](https://github.com/yhilpisch/py4fi2nd) |
-| **Awesome-finance-skills** | ⭐ 2,024 | A collection of Awesome Finance Agent Skills for free and easy to start - Agent Skills | [🔗](https://github.com/RKiding/Awesome-finance-skills) |
-| **netwatch** | ⭐ 1,536 | Real-time network diagnostics in your terminal. One command, zero config, instant visibility. | [🔗](https://github.com/matthart1983/netwatch) |
-| **bc250-documentation** | ⭐ 469 | Information on running the AMD BC-250 powered ASRock mining boards as a desktop. | [🔗](https://github.com/mothenjoyer69/bc250-documentation) |
-| **hermes-optimization-guide** | ⭐ 235 | Hermes Agent setup, migration, LightRAG, Telegram, and skill creation guide | [🔗](https://github.com/OnlyTerp/hermes-optimization-guide) |
-| **RetroMultiTools** | ⭐ 195 | A cross-platform desktop utility for managing, inspecting, modifying, patching & launching retro game ROMs. | [🔗](https://github.com/SvenGDK/RetroMultiTools) |
-| **eoip** | ⭐ 160 | Linux kernel mode EOIP tunnel (compatible with MikroTik) | [🔗](https://github.com/bbonev/eoip) |
-| **autotrade** | ⭐ 149 |  | [🔗](https://github.com/rv64m/autotrade) |
-| **resources** | ⭐ 68 | Lista de artculos y recursos sobre programacin y principalmente desarrollo web | [🔗](https://github.com/codingpotions/resources) |
-| **citra-nightly** | ⭐ 51 |  | [🔗](https://github.com/ourfavoritefruits/citra-nightly) |
-| **linux-terminal-anki-deck** | ⭐ 17 | An Anki flashcards deck for studying linux terminal tools and commands. | [🔗](https://github.com/Odin94/linux-terminal-anki-deck) |
-| **AnkiDecks** | ⭐ 5 | Collection of personal Anki flashcard decks focusing on programming concepts | [🔗](https://github.com/AdamF42/AnkiDecks) |
+> [!info] Resumen
+> **30 repos** curados · ⭐ Top: **387.6k** · Acumulado: **1.1M** estrellas · Actualizado: `2026-05-03`
+
+---
+
+## 🏆 Elite
+
+| Proyecto | ⭐ Stars | Descripción |
+| :--- | ---: | :--- |
+| [**free-programming-books**](https://github.com/EbookFoundation/free-programming-books) | 387.6k | :books: Freely available programming books |
+| [**Python**](https://github.com/TheAlgorithms/Python) | 220.7k | All Algorithms implemented in Python |
+| [**superpowers**](https://github.com/obra/superpowers) | 177.3k | An agentic skills framework & software development methodology that works. |
+
+## 🔥 Popular
+
+| Proyecto | ⭐ Stars | Descripción |
+| :--- | ---: | :--- |
+| [**system-design-101**](https://github.com/ByteByteGoHq/system-design-101) | 82.4k | Explain complex systems using visuals and simple terms. Help you prepare for system… |
+| [**n8n-workflows**](https://github.com/Zie619/n8n-workflows) | 54.1k | all of the workflows of n8n i could find (also from the site itself) |
+| [**BitNet**](https://github.com/microsoft/BitNet) | 38.8k | Official inference framework for 1-bit LLMs |
+| [**interview-company-wise-problems**](https://github.com/liquidslr/interview-company-wise-problems) | 23.3k | Lists of company wise questions. Every csv file in the companies directory corresponds to… |
+| [**Kronos**](https://github.com/shiyu-coder/Kronos) | 22.6k | Kronos: A Foundation Model for the Language of Financial Markets |
+| [**hello-git**](https://github.com/mouredev/hello-git) | 14.0k | Curso para aprender a trabajar con el sistema de control de versiones Git y la plataforma… |
+
+## ⭐ Notable
+
+| Proyecto | ⭐ Stars | Descripción |
+| :--- | ---: | :--- |
+| [**watchdog**](https://github.com/gorakhargosh/watchdog) | 7.3k | Python library and shell utilities to monitor filesystem events. |
+| [**tensortrade**](https://github.com/tensortrade-org/tensortrade) | 6.2k | An open source reinforcement learning framework for training, evaluating, and deploying… |
+| [**pdf-craft**](https://github.com/oomol-lab/pdf-craft) | 5.4k | PDF craft can convert PDF files into various other formats. This project will focus on… |
+| [**prediction-market-analysis**](https://github.com/Jon-Becker/prediction-market-analysis) | 3.2k | A framework for collecting and analyzing prediction market data, including the largest… |
+| [**terraink**](https://github.com/yousifamanuel/terraink) | 3.0k | Terraink: The Cartographic Poster Engine that creates unique and customizable map posters |
+| [**udemy-downloader-gui**](https://github.com/heliomarpm/udemy-downloader-gui) | 2.6k | A desktop application for downloading Udemy Courses |
+| [**py4fi2nd**](https://github.com/yhilpisch/py4fi2nd) | 2.2k | Jupyter Notebooks and code for Python for Finance (2nd ed., O'Reilly) by Yves Hilpisch. |
+| [**Awesome-finance-skills**](https://github.com/RKiding/Awesome-finance-skills) | 2.0k | A collection of Awesome Finance Agent Skills for free and easy to start - Agent Skills |
+| [**netwatch**](https://github.com/matthart1983/netwatch) | 1.6k | Real-time network diagnostics in your terminal. One command, zero config, instant… |
+
+## 🌱 Emerging
+
+| Proyecto | ⭐ Stars | Descripción |
+| :--- | ---: | :--- |
+| [**bc250-documentation**](https://github.com/mothenjoyer69/bc250-documentation) | 469 | Information on running the AMD BC-250 powered ASRock mining boards as a desktop. |
+| [**aio-proxy**](https://github.com/hrostami/aio-proxy) | 316 | This script automates setting up proxy related tools in Linux. |
+| [**hermes-optimization-guide**](https://github.com/OnlyTerp/hermes-optimization-guide) | 246 | Hermes Agent setup, migration, LightRAG, Telegram, and skill creation guide |
+| [**PokemonStudio**](https://github.com/PokemonWorkshop/PokemonStudio) | 196 | Pokmon Studio is a monster taming game editor which helps you to bring your ideas to… |
+| [**RetroMultiTools**](https://github.com/SvenGDK/RetroMultiTools) | 195 | A cross-platform desktop utility for managing, inspecting, modifying, patching &… |
+| [**knowledge**](https://github.com/withoneai/knowledge) | 169 | The world's largest API knowledge base, built for agents. |
+| [**eoip**](https://github.com/bbonev/eoip) | 160 | Linux kernel mode EOIP tunnel (compatible with MikroTik) |
+| [**autotrade**](https://github.com/rv64m/autotrade) | 149 | Sin descripcin |
+| [**resources**](https://github.com/codingpotions/resources) | 68 | Lista de artculos y recursos sobre programacin y principalmente desarrollo web |
+| [**citra-nightly**](https://github.com/ourfavoritefruits/citra-nightly) | 51 | Sin descripcin |
+| [**linux-terminal-anki-deck**](https://github.com/Odin94/linux-terminal-anki-deck) | 17 | An Anki flashcards deck for studying linux terminal tools and commands. |
+| [**AnkiDecks**](https://github.com/AdamF42/AnkiDecks) | 5 | Collection of personal Anki flashcard decks focusing on programming concepts |
+
