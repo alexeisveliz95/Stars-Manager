@@ -1,0 +1,68 @@
+name: 🧵 Weekly Deep Dive Thread
+on:
+  schedule:
+    - cron: '0 15 * * 2'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tweet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # 1. GENERAR TEXTO (Basado en el prompt específico para este formato)
+      - name: Generate Content
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: python src/agents/writer_agent.py "thread"
+
+      # 2. GENERAR IMAGEN (Basada en el texto recién creado)
+      - name: Generate Image
+        if: success()
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: python src/agents/image_agent.py "thread"
+
+      # 3. PUBLICAR EN X (Con texto e imagen)
+      - name: Post to X
+        if: success()
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+        run: python src/social/twitter_bot.py "tweet_thread.txt"
+
+      # 4. SUBIR ARTEFACTO (Para revisión manual en GitHub)
+      # Nota: si el post fue exitoso, twitter_bot.py ya eliminó los archivos temporales.
+      # Este artefacto es útil principalmente cuando el post falla — para debug.
+      - name: Upload Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: post-assets-thread
+          path: |
+            tweet_thread.txt
+            image_thread.png
+
+      # 5. PERSISTIR HISTORIAL EN EL REPO
+      - name: Save History to Repo
+        if: always()
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/history_images/*.png || true
+          git add data/*.json || true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📸 Archivo de post y assets: $(date +'%Y-%m-%d %H:%M:%S')" && git push)
