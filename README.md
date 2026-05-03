@@ -15,7 +15,7 @@
 [![Obsidian](https://img.shields.io/badge/Obsidian-PKM%20Ready-483699?style=for-the-badge&logo=obsidian&logoColor=white)](https://obsidian.md)
 
 [![License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.0-F59E0B?style=for-the-badge)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/Version-1.0.230-F59E0B?style=for-the-badge)](CHANGELOG.md)
 [![Status](https://img.shields.io/badge/Status-Production-22C55E?style=for-the-badge)]()
 
 ---
