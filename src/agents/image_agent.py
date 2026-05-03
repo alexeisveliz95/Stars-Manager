@@ -46,10 +46,13 @@ ESTILOS_VISUALES = {
 }
 
 VISUAL_IDENTITY = (
-    "deep navy blue obsidian background, Frosted glass textures,"
-    "volumetric lighting, subtle bloom effect, high-end digital render, "
-    "Fibonacci spiral arrangement, clean composition, "
-    "FHD resolution, 16:9 aspect ratio, professional and elegant"
+    "deep navy blue obsidian background with subtle gradient, "
+    "frosted glass and translucent crystal textures, "
+    "volumetric god rays, soft cinematic lighting, subtle bloom and lens flare, "
+    "elegant Fibonacci spiral composition, perfect balance and negative space, "
+    "clean minimalist layout, high-end digital render, ultra-detailed, "
+    "luxurious and sophisticated atmosphere, "
+    "HD cinematic quality, sharp focus, 16:9 aspect ratio, professional photography style"
 )
 
 METAPHOR_EXAMPLES = """
