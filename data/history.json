@@ -1,6 +1,7 @@
 {
     "publicados": [
         "browserbase/skills",
-        "Flowseal/zapret-discord-youtube"
+        "Flowseal/zapret-discord-youtube",
+        "jwasham/coding-interview-university"
     ]
 }
