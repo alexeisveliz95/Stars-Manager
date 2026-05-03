@@ -7,17 +7,14 @@ from groq import Groq
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def generate_tweet_with_ai(repo, modo):
-    """
-    Genera contenido usando Groq con prompts específicos según el modo.
-    Evita el tono genérico de IA usando jerga técnica y reglas de estilo.
-    """
+
     client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
     
     system_context = (
-        "Eres un Desarrollador Senior y Tech Influencer con 10k seguidores. "
+        "Eres un Desarrollador Junior y Tech Influencer con pocos seguidores y tu objetivo es construir una comunidad de desarrolladores interesados en el software moderno. "
         "Tu estilo es: Directo, técnico, un poco cínico con el software inflado y entusiasta con el minimalismo. "
-        "REGLAS: Prohibido hashtags. Prohibido exclamaciones excesivas. "
-        "Usa términos como: DX, boilerplate, overhead, stack, production-ready."
+        "REGLAS: Prohibido hashtags. Prohibido exclamaciones excesivas. Prohibido hablar con superioridad a otros desarrolladores."
+        "Usa términos pero sin sobrecargar demasiado la comunicación: LLM, Prompt Engineering, Inference, Agent Orchestration, Workflow, CI/CD, API, endpoint, scalability, microservices, overhead, stack, production-ready, ."
     )
 
     if modo == "thread":

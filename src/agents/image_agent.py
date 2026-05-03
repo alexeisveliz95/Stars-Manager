@@ -46,12 +46,13 @@ ESTILOS_VISUALES = {
 }
 
 VISUAL_IDENTITY = (
-    "flat 2D vector art, isometric projection no perspective distortion, "
-    "solid deep navy background #000814, ultra-thin white lines #FFFFFF, "
-    "electric cyan accent lines #00F5FF, sharp geometric edges, "
-    "60 percent subject 40 percent negative space, high contrast, "
-    "no gradients, no shadows, no blur, no 3D rendering, no people, no text, "
-    "professional minimalist aesthetic, 16:9 aspect ratio"
+    "cinematic technical art, abstract software architecture, "
+    "deep navy blue obsidian background, "
+    "glowing electric cyan data pathways, crystalline nodes, "
+    "fine white geometric lace-like details, "
+    "volumetric lighting, subtle bloom effect, high-end digital render, "
+    "symmetrical yet complex, clean composition, "
+    "FHD resolution, 16:9 aspect ratio, professional and elegant"
 )
 
 METAPHOR_EXAMPLES = """
