@@ -6,3 +6,4 @@ groq
 tweepy
 huggingface_hub
 pillow
+feedparser
