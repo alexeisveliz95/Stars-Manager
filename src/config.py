@@ -3,28 +3,60 @@ import os
 TOKEN = os.getenv("STARS_TOKEN")
 USER = os.getenv("GITHUB_REPOSITORY_OWNER")
 
+# NOTA: el orden de las categorías define la prioridad de clasificación.
+# Un repo que matchea múltiples categorías cae en la primera que aparece aquí.
+# Las categorías más específicas deben ir antes que las generales.
 CATEGORIES_DB = {
     # 🧠 La joya de la corona actual
-    "AI & Data Science": ["ai", "ml", "llm", "gpt", "pytorch", "tensorflow", "neural", "deep learning", "langchain", "stable diffusion", "midjourney", "openai"],
-    
+    "AI & Data Science": [
+        "ai", "llm", "gpt", "pytorch", "tensorflow", "neural", "openai",
+        "deep learning", "langchain", "stable diffusion", "midjourney"
+        # "ml" omitido — matchea en "html", "email", etc. Cubierto por los demás keywords.
+    ],
+
     # 🎮 El nuevo nicho estratégico
-    "PlayStation Homebrew & Linux": ["ps4", "ps5", "playstation", "ps4-linux", "ps5-linux", "homebrew", "jailbreak", "orbis", "prospero", "exploit", "payload"],
-    
+    # NOTA: keywords con guión ("ps4-linux") pueden no matchear con \b en algunos contextos.
+    # Se incluyen las versiones sin guión como fallback.
+    "PlayStation Homebrew & Linux": [
+        "ps4", "ps5", "playstation", "homebrew", "jailbreak",
+        "orbis", "prospero", "exploit", "payload",
+        "ps4 linux", "ps5 linux",   # versión sin guión para topics de GitHub
+    ],
+
     # 🛡️ Siempre en tendencia y con mucho engagement
-    "Cybersecurity & Hacking": ["security", "hacking", "pentest", "malware", "vulnerability", "infosec", "osint", "cryptography"],
-    
+    "Cybersecurity & Hacking": [
+        "security", "hacking", "pentest", "malware", "vulnerability",
+        "infosec", "osint", "cryptography"
+    ],
+
     # 🕸️ El ecosistema cripto (muy activo en GitHub)
-    "Web3 & Blockchain": ["blockchain", "crypto", "ethereum", "smart-contract", "web3", "solidity", "defi", "nft"],
-    
+    "Web3 & Blockchain": [
+        "blockchain", "crypto", "ethereum", "smart-contract", "web3",
+        "solidity", "defi", "nft"
+    ],
+
     # 🏗️ El pan de cada día del desarrollo
-    "Web Development": ["react", "vue", "html", "css", "javascript", "typescript", "frontend", "nextjs", "tailwind"],
-    
-    # ⚙️ Los motores
-    "Python & Backend": ["fastapi", "django", "flask", "sql", "redis", "postgres", "mongodb", "api", "node"],
-    
+    "Web Development": [
+        "react", "vue", "html", "css", "javascript", "typescript",
+        "frontend", "nextjs", "tailwind"
+    ],
+
+    # ⚙️ Los motores — "node" va aquí antes que en Mobile para evitar falsos positivos
+    "Python & Backend": [
+        "fastapi", "django", "flask", "sql", "redis", "postgres",
+        "mongodb", "node"
+        # "api" omitido — matchea en "capability", "apiary", etc.
+    ],
+
     # 🤖 Herramientas que ahorran tiempo (muy buenas para monetizar)
-    "Automation & DevOps": ["automation", "bot", "cli", "scraping", "workflow", "docker", "kubernetes", "ci-cd", "aws", "terraform"],
-    
+    "Automation & DevOps": [
+        "automation", "cli", "scraping", "workflow", "docker",
+        "kubernetes", "terraform", "ci-cd",
+        # "bot" omitido — matchea en "robot". "aws" omitido — matchea en "password".
+    ],
+
     # 📱 Desarrollo Móvil
-    "Mobile Development": ["android", "ios", "flutter", "react-native", "swift", "kotlin"]
+    "Mobile Development": [
+        "android", "ios", "flutter", "react-native", "swift", "kotlin"
+    ],
 }
