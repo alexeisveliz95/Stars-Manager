@@ -47,11 +47,9 @@ ESTILOS_VISUALES = {
 
 VISUAL_IDENTITY = (
     "cinematic technical art, abstract software architecture, "
-    "deep navy blue obsidian background, "
-    "glowing electric cyan data pathways, crystalline nodes, "
-    "fine white geometric lace-like details, "
+    "deep navy blue obsidian background, Frosted glass textures"
     "volumetric lighting, subtle bloom effect, high-end digital render, "
-    "symmetrical yet complex, clean composition, "
+    "Fibonacci spiral arrangement, clean composition, "
     "FHD resolution, 16:9 aspect ratio, professional and elegant"
 )
 
