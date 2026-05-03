@@ -3,49 +3,49 @@
         "name": "TauricResearch/TradingAgents",
         "description": "TradingAgents: Multi-Agents LLM Financial Trading Framework",
         "growth": 3315,
-        "stars": 64829,
+        "stars": 64835,
         "url": "https://github.com/TauricResearch/TradingAgents"
     },
     {
         "name": "ruvnet/ruflo",
         "description": "\ud83c\udf0a The leading agent orchestration platform for Claude. Deploy intelligent multi-agent swarms, coordinate autonomous workflows, and build conversational AI systems. Features enterprise-grade architecture, self-learning swarm intelligence, RAG integration, and native Claude Code / Codex Integration",
         "growth": 1834,
-        "stars": 38423,
+        "stars": 38425,
         "url": "https://github.com/ruvnet/ruflo"
     },
     {
         "name": "soxoj/maigret",
         "description": "\ud83d\udd75\ufe0f\u200d\u2642\ufe0f Collect a dossier on a person by username from 3000+ sites",
         "growth": 1117,
-        "stars": 23592,
+        "stars": 23593,
         "url": "https://github.com/soxoj/maigret"
     },
     {
         "name": "1jehuang/jcode",
         "description": "Coding Agent Harness",
         "growth": 587,
-        "stars": 3329,
+        "stars": 3330,
         "url": "https://github.com/1jehuang/jcode"
     },
     {
         "name": "AIDC-AI/Pixelle-Video",
         "description": "\ud83d\ude80 AI \u5168\u81ea\u52a8\u77ed\u89c6\u9891\u5f15\u64ce | AI Fully Automated Short Video Engine",
         "growth": 478,
-        "stars": 9797,
+        "stars": 9799,
         "url": "https://github.com/AIDC-AI/Pixelle-Video"
     },
     {
         "name": "Hmbown/DeepSeek-TUI",
         "description": "Coding agent for DeepSeek models that runs in your terminal",
         "growth": 389,
-        "stars": 2007,
+        "stars": 2009,
         "url": "https://github.com/Hmbown/DeepSeek-TUI"
     },
     {
         "name": "browserbase/skills",
         "description": "Claude Agent SDK with a web browsing tool",
         "growth": 322,
-        "stars": 1756,
+        "stars": 1757,
         "url": "https://github.com/browserbase/skills"
     },
     {
@@ -59,7 +59,7 @@
         "name": "openwrt/openwrt",
         "description": "This repository is a mirror ofhttps://git.openwrt.org/openwrt/openwrt.gitIt is for reference only and is not active for check-ins. We will continue to accept Pull Requests here. They will be merged via staging trees then into openwrt.git.",
         "growth": 14,
-        "stars": 26571,
+        "stars": 26573,
         "url": "https://github.com/openwrt/openwrt"
     }
 ]
