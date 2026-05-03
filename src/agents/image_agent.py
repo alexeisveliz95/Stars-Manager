@@ -46,8 +46,8 @@ ESTILOS_VISUALES = {
 }
 
 VISUAL_IDENTITY = (
-    "cinematic technical art, abstract software architecture, "
-    "deep navy blue obsidian background, Frosted glass textures"
+    "cinematic technical art, Liquid metal mercury flow, "
+    "deep navy blue obsidian background, Frosted glass textures,"
     "volumetric lighting, subtle bloom effect, high-end digital render, "
     "Fibonacci spiral arrangement, clean composition, "
     "FHD resolution, 16:9 aspect ratio, professional and elegant"
