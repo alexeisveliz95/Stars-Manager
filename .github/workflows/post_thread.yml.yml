@@ -4,12 +4,15 @@ on:
     - cron: '0 15 * * 2'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   tweet:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -42,24 +45,22 @@ jobs:
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
         run: python src/social/twitter_bot.py "tweet_thread.txt"
 
-      # 4. SUBIR ARTEFACTO (Para revisión manual en GitHub)
+      # 4. SUBIR ARTEFACTO 
       - name: Upload Artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: post-assets
+          name: post-assets-thread
           path: |
             tweet_thread.txt
             image_thread.png
 
       # 5. PERSISTIR HISTORIAL EN EL REPO
-      # Usamos 'always()' para que si el bot falló, al menos guardemos la imagen generada
       - name: Save History to Repo
         if: always()
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          # Agregamos el historial de imágenes y cualquier cambio en data/
           git add data/history_images/*.png || true
           git add data/*.json || true
           git diff --quiet && git diff --staged --quiet || (git commit -m "📸 Archivo de post y assets: $(date +'%Y-%m-%d %H:%M:%S')" && git push)

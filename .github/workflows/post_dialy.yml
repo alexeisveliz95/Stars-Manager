@@ -4,6 +4,9 @@ on:
     - cron: '0 10 * * 1-4'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   tweet:
     runs-on: ubuntu-latest
@@ -52,8 +55,7 @@ jobs:
             tweet_single.txt
             image_single.png
 
-      # 5. PERSISTIR HISTORIAL EN EL REPO
-      # Usamos 'always()' para que si el bot falló, al menos guardemos la imagen generada
+
       - name: Save History to Repo
         if: always()
         run: |
