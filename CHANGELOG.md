@@ -154,17 +154,7 @@ refactorizó el pipeline de imágenes para Flux.
 
 ---
 
-### 🗑️ Acción manual requerida
-
-```bash
-git rm .github/workflows/post_thread.yml.yml
-git commit -m "fix: remove double-extension workflow file"
-git push
-```
-
----
-
-## [v0.x.x] — Historial previo
+## [v1.0.0] — Historial previo
 
 Más de 200 commits de desarrollo iterativo, construcción del pipeline base,
 integración de APIs (Groq, HuggingFace, Twitter), scraper de GitHub trending,
