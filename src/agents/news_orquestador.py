@@ -2,10 +2,10 @@ import os
 import subprocess
 import sys
 
-from scrapers.hn_scraper import HNScraper 
-from scrapers.reddit_scraper import RedditScraper
-from scrapers.rss_scraper import RSSScraper
-from agents.writer_agent import generate_tweet_with_ai
+from src.scrapers.hn_scraper import HNScraper 
+from src.scrapers.reddit_scraper import RedditScraper
+from src.scrapers.rss_scraper import RSSScraper
+from src.agents.writer_agent import generate_tweet_with_ai
 
 # 1. Configuración de rutas para que Koda encuentre sus herramientas
 # BASE_DIR apunta a la raíz del proyecto para ubicar archivos temporales
