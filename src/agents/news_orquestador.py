@@ -2,16 +2,13 @@ import os
 import subprocess
 import sys
 
-from src.scrapers.hn_scraper import HNScraper 
-from src.scrapers.reddit_scraper import RedditScraper
-from src.scrapers.rss_scraper import RSSScraper
-from src.agents.writer_agent import generate_tweet_with_ai
-
-# 1. Configuración de rutas para que Koda encuentre sus herramientas
-# BASE_DIR apunta a la raíz del proyecto para ubicar archivos temporales
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(os.path.join(BASE_DIR, "src"))
 
+from src.scrapers.hn_scraper import HNScraper  # noqa: E402
+from src.scrapers.reddit_scraper import RedditScraper  # noqa: E402
+from src.scrapers.rss_scraper import RSSScraper  # noqa: E402
+from src.agents.writer_agent import generate_tweet_with_ai  # noqa: E402
 
 def ejecutar_noticias():
     print("🤖 --- Koda News Agent: Iniciando Flujo de Noticias ---")
