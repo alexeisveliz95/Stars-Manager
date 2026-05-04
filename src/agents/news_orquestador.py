@@ -77,7 +77,6 @@ def ejecutar_noticias():
 
     print(f"📤 Koda está publicando en X...")
     try:
-    # ASEGÚRATE DE QUE ESTA LÍNEA NO TENGA EL '#' AL PRINCIPIO
         post_content(tweet_text) 
         print("🎯 ¡Post publicado con éxito!")
     except Exception as e:

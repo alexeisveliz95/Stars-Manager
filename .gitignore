@@ -28,4 +28,4 @@ image_thread.png
 image_list.png
 
 # PERMITIR el historial de imágenes en data
-data/history_images/*.png
+!data/history_images/*.png
