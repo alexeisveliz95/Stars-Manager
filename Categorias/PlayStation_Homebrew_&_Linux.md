@@ -1,7 +1,7 @@
 # 📂 PlayStation Homebrew & Linux
 
 > [!info] Resumen
-> **3 repos** curados · ⭐ Top: **5.9k** · Acumulado: **7.1k** estrellas · Actualizado: `2026-05-03`
+> **3 repos** curados · ⭐ Top: **5.9k** · Acumulado: **7.2k** estrellas · Actualizado: `2026-05-04`
 
 ---
 

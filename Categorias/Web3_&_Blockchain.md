@@ -1,7 +1,7 @@
 # 📂 Web3 & Blockchain
 
 > [!info] Resumen
-> **4 repos** curados · ⭐ Top: **49.7k** · Acumulado: **71.6k** estrellas · Actualizado: `2026-05-03`
+> **4 repos** curados · ⭐ Top: **49.8k** · Acumulado: **71.6k** estrellas · Actualizado: `2026-05-04`
 
 ---
 
@@ -9,7 +9,7 @@
 
 | Proyecto | ⭐ Stars | Descripción |
 | :--- | ---: | :--- |
-| [**freqtrade**](https://github.com/freqtrade/freqtrade) | 49.7k | Free, open source crypto trading bot |
+| [**freqtrade**](https://github.com/freqtrade/freqtrade) | 49.8k | Free, open source crypto trading bot |
 | [**hummingbot**](https://github.com/hummingbot/hummingbot) | 18.4k | Open source software that helps you create and deploy high-frequency crypto trading bots |
 
 ## ⭐ Notable

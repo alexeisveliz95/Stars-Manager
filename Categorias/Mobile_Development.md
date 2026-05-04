@@ -1,7 +1,7 @@
 # 📂 Mobile Development
 
 > [!info] Resumen
-> **3 repos** curados · ⭐ Top: **54.3k** · Acumulado: **58.8k** estrellas · Actualizado: `2026-05-03`
+> **3 repos** curados · ⭐ Top: **54.3k** · Acumulado: **58.8k** estrellas · Actualizado: `2026-05-04`
 
 ---
 

@@ -1,7 +1,7 @@
 # 📂 Otros
 
 > [!info] Resumen
-> **30 repos** curados · ⭐ Top: **387.6k** · Acumulado: **1.1M** estrellas · Actualizado: `2026-05-03`
+> **30 repos** curados · ⭐ Top: **387.6k** · Acumulado: **1.1M** estrellas · Actualizado: `2026-05-04`
 
 ---
 
@@ -11,7 +11,7 @@
 | :--- | ---: | :--- |
 | [**free-programming-books**](https://github.com/EbookFoundation/free-programming-books) | 387.6k | :books: Freely available programming books |
 | [**Python**](https://github.com/TheAlgorithms/Python) | 220.7k | All Algorithms implemented in Python |
-| [**superpowers**](https://github.com/obra/superpowers) | 177.3k | An agentic skills framework & software development methodology that works. |
+| [**superpowers**](https://github.com/obra/superpowers) | 177.4k | An agentic skills framework & software development methodology that works. |
 
 ## 🔥 Popular
 
@@ -20,7 +20,7 @@
 | [**system-design-101**](https://github.com/ByteByteGoHq/system-design-101) | 82.4k | Explain complex systems using visuals and simple terms. Help you prepare for system… |
 | [**n8n-workflows**](https://github.com/Zie619/n8n-workflows) | 54.1k | all of the workflows of n8n i could find (also from the site itself) |
 | [**BitNet**](https://github.com/microsoft/BitNet) | 38.8k | Official inference framework for 1-bit LLMs |
-| [**interview-company-wise-problems**](https://github.com/liquidslr/interview-company-wise-problems) | 23.3k | Lists of company wise questions. Every csv file in the companies directory corresponds to… |
+| [**interview-company-wise-problems**](https://github.com/liquidslr/interview-company-wise-problems) | 23.4k | Lists of company wise questions. Every csv file in the companies directory corresponds to… |
 | [**Kronos**](https://github.com/shiyu-coder/Kronos) | 22.6k | Kronos: A Foundation Model for the Language of Financial Markets |
 | [**hello-git**](https://github.com/mouredev/hello-git) | 14.0k | Curso para aprender a trabajar con el sistema de control de versiones Git y la plataforma… |
 
@@ -31,7 +31,7 @@
 | [**watchdog**](https://github.com/gorakhargosh/watchdog) | 7.3k | Python library and shell utilities to monitor filesystem events. |
 | [**tensortrade**](https://github.com/tensortrade-org/tensortrade) | 6.2k | An open source reinforcement learning framework for training, evaluating, and deploying… |
 | [**pdf-craft**](https://github.com/oomol-lab/pdf-craft) | 5.4k | PDF craft can convert PDF files into various other formats. This project will focus on… |
-| [**prediction-market-analysis**](https://github.com/Jon-Becker/prediction-market-analysis) | 3.2k | A framework for collecting and analyzing prediction market data, including the largest… |
+| [**prediction-market-analysis**](https://github.com/Jon-Becker/prediction-market-analysis) | 3.3k | A framework for collecting and analyzing prediction market data, including the largest… |
 | [**terraink**](https://github.com/yousifamanuel/terraink) | 3.0k | Terraink: The Cartographic Poster Engine that creates unique and customizable map posters |
 | [**udemy-downloader-gui**](https://github.com/heliomarpm/udemy-downloader-gui) | 2.6k | A desktop application for downloading Udemy Courses |
 | [**py4fi2nd**](https://github.com/yhilpisch/py4fi2nd) | 2.2k | Jupyter Notebooks and code for Python for Finance (2nd ed., O'Reilly) by Yves Hilpisch. |
@@ -44,7 +44,7 @@
 | :--- | ---: | :--- |
 | [**bc250-documentation**](https://github.com/mothenjoyer69/bc250-documentation) | 469 | Information on running the AMD BC-250 powered ASRock mining boards as a desktop. |
 | [**aio-proxy**](https://github.com/hrostami/aio-proxy) | 316 | This script automates setting up proxy related tools in Linux. |
-| [**hermes-optimization-guide**](https://github.com/OnlyTerp/hermes-optimization-guide) | 246 | Hermes Agent setup, migration, LightRAG, Telegram, and skill creation guide |
+| [**hermes-optimization-guide**](https://github.com/OnlyTerp/hermes-optimization-guide) | 247 | Hermes Agent setup, migration, LightRAG, Telegram, and skill creation guide |
 | [**PokemonStudio**](https://github.com/PokemonWorkshop/PokemonStudio) | 196 | Pokmon Studio is a monster taming game editor which helps you to bring your ideas to… |
 | [**RetroMultiTools**](https://github.com/SvenGDK/RetroMultiTools) | 195 | A cross-platform desktop utility for managing, inspecting, modifying, patching &… |
 | [**knowledge**](https://github.com/withoneai/knowledge) | 169 | The world's largest API knowledge base, built for agents. |

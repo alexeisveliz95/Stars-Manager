@@ -1,7 +1,7 @@
 # 📂 Web Development
 
 > [!info] Resumen
-> **8 repos** curados · ⭐ Top: **264.7k** · Acumulado: **474.2k** estrellas · Actualizado: `2026-05-03`
+> **8 repos** curados · ⭐ Top: **264.8k** · Acumulado: **474.2k** estrellas · Actualizado: `2026-05-04`
 
 ---
 
@@ -9,7 +9,7 @@
 
 | Proyecto | ⭐ Stars | Descripción |
 | :--- | ---: | :--- |
-| [**project-based-learning**](https://github.com/practical-tutorials/project-based-learning) | 264.7k | Curated list of project-based tutorials |
+| [**project-based-learning**](https://github.com/practical-tutorials/project-based-learning) | 264.8k | Curated list of project-based tutorials |
 
 ## 🔥 Popular
 

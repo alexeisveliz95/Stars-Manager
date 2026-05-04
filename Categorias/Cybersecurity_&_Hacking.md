@@ -1,7 +1,7 @@
 # 📂 Cybersecurity & Hacking
 
 > [!info] Resumen
-> **5 repos** curados · ⭐ Top: **70.8k** · Acumulado: **110.5k** estrellas · Actualizado: `2026-05-03`
+> **5 repos** curados · ⭐ Top: **70.9k** · Acumulado: **110.7k** estrellas · Actualizado: `2026-05-04`
 
 ---
 
@@ -9,8 +9,8 @@
 
 | Proyecto | ⭐ Stars | Descripción |
 | :--- | ---: | :--- |
-| [**hackingtool**](https://github.com/Z4nzu/hackingtool) | 70.8k | ALL IN ONE Hacking Tool For Hackers |
-| [**sniffnet**](https://github.com/GyulyVGC/sniffnet) | 37.1k | Comfortably monitor your Internet traffic |
+| [**hackingtool**](https://github.com/Z4nzu/hackingtool) | 70.9k | ALL IN ONE Hacking Tool For Hackers |
+| [**sniffnet**](https://github.com/GyulyVGC/sniffnet) | 37.2k | Comfortably monitor your Internet traffic |
 
 ## ⭐ Notable
 
