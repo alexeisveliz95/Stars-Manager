@@ -1,56 +1,79 @@
 import requests
+import json
+import os
 import time
-from src.config import ALL_KEYWORDS
+from config import ALL_KEYWORDS
 
 class RedditScraper:
     def __init__(self):
-        # Subreddits que encajan con tus categorías de config.py
         self.subreddits = [
-            "MachineLearning", 
-            "LocalLLM", 
-            "netsec", 
-            "jailbreak", 
-            "selfhosted"
+            "MachineLearning",
+            "LocalLLM",
+            "netsec",
+            "selfhosted",
+            "programming",
         ]
-        # Reddit requiere un User-Agent único para no bloquearte
-        self.headers = {'User-agent': 'RufloBot/1.0'}
+        self.headers = {"User-agent": "StarsManagerBot/1.0"}
         self.history_file = "data/news_history.json"
 
+    def _load_history(self):
+        if os.path.exists(self.history_file):
+            with open(self.history_file, "r") as f:
+                return json.load(f)
+        return []
+
+    def _save_history(self, post_id):
+        history = self._load_history()
+        if post_id not in history:
+            history.append(post_id)
+        os.makedirs(os.path.dirname(self.history_file), exist_ok=True)
+        with open(self.history_file, "w") as f:
+            json.dump(history[-100:], f)
+
     def fetch_news(self):
-        print("👾 RedditScraper: Buscando hilos interesantes...")
-        
+        print("👾 RedditScraper: Buscando hilos relevantes...")
+        history = self._load_history()
+
         for sub in self.subreddits:
             try:
                 url = f"https://www.reddit.com/r/{sub}/top/.json?t=day&limit=10"
-                response = requests.get(url, headers=self.headers)
-                
+                response = requests.get(url, headers=self.headers, timeout=10)
+
                 if response.status_code != 200:
+                    print(f"⚠️ RedditScraper: HTTP {response.status_code} en r/{sub}")
                     continue
 
-                data = response.json()
-                posts = data['data']['children']
+                posts = response.json().get("data", {}).get("children", [])
 
                 for post in posts:
-                    p_data = post['data']
-                    title = p_data['title']
-                    
-                    # Filtrado usando tus categorías globales
+                    p = post["data"]
+                    post_id = p["id"]
+
+                    if post_id in history:
+                        continue
+
+                    title = p.get("title", "")
                     if any(kw.lower() in title.lower() for kw in ALL_KEYWORDS):
-                        # Evitamos posts que sean solo imágenes o videos sin link externo útil
-                        link = p_data.get('url')
-                        
+                        link = p.get("url", "")
+                        permalink = f"https://www.reddit.com{p['permalink']}"
+
                         print(f"🎯 Match en r/{sub}: {title}")
+                        self._save_history(post_id)
                         return {
                             "title": title,
-                            "url": link if "reddit.com" not in link else f"https://www.reddit.com{p_data['permalink']}",
+                            "url": link if "reddit.com" not in link else permalink,
                             "source": f"Reddit r/{sub}",
-                            "id": p_data['id']
+                            "id": post_id,
                         }
-                
-                # Un pequeño sleep para no ser agresivos con la API
-                time.sleep(1)
 
+                time.sleep(1)  # Respeto entre subreddits
+
+            except requests.Timeout:
+                print(f"⚠️ RedditScraper: Timeout en r/{sub}")
+                continue
             except Exception as e:
-                print(f"❌ Error scrapeando r/{sub}: {e}")
-        
+                print(f"❌ RedditScraper error en r/{sub}: {e}")
+                continue
+
+        print("ℹ️ RedditScraper: Sin noticias nuevas que coincidan.")
         return None
