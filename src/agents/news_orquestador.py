@@ -2,7 +2,7 @@ import os
 import subprocess
 import sys
 
-from src.scrapers.hn_scraper import HNScraper 
+from scrapers.hn_scraper import HNScraper 
 from scrapers.reddit_scraper import RedditScraper
 from scrapers.rss_scraper import RSSScraper
 from agents.writer_agent import generate_tweet_with_ai
