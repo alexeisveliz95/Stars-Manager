@@ -1,67 +1,79 @@
 import os
 import sys
 
-# Aseguramos que Python encuentre la carpeta src
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# Añadimos src/ al path para que los imports funcionen igual que en el resto del proyecto
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
-from src.scrapers.hn_scraper import HNScraper
-from src.scrapers.reddit_scraper import RedditScraper
-from src.scrapers.rss_scraper import RSSScraper
-from src.agents.writer_agent import WriterAgent
-from src.agents.image_agent import ImageAgent
-# Importa aquí tu función real de twitter_bot
-# from twitter_bot import publicar_en_x 
+from scrapers.hn_scraper import HNScraper
+from scrapers.reddit_scraper import RedditScraper
+from scrapers.rss_scraper import RSSScraper
+from agents.writer_agent import generate_tweet_with_ai
+from agents.image_agent import generate_visual_prompt, download_hf_image
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 def ejecutar_noticias():
-    print("🚀 --- Iniciando Flujo de Noticias de Ruflo ---")
-    
-    # 1. Definimos los scrapers en orden de prioridad
-    fuentes = [
-        HNScraper(), 
-        RedditScraper(), 
-        RSSScraper()
-    ]
-    
-    noticia_seleccionada = None
+    print("🚀 --- Iniciando Flujo de Noticias ---")
 
-    # 2. Intentamos obtener una noticia válida
+    # 1. Fuentes en orden de prioridad — HN primero por calidad, RSS último como fallback
+    fuentes = [
+        HNScraper(),
+        RedditScraper(),
+        RSSScraper(),
+    ]
+
+    noticia = None
     for scraper in fuentes:
         try:
-            print(f"🔎 Probando con: {type(scraper).__name__}...")
             resultado = scraper.fetch_news()
-            
             if resultado:
-                noticia_seleccionada = resultado
+                noticia = resultado
                 print(f"✅ Noticia encontrada en {resultado['source']}: {resultado['title']}")
-                break # Detenemos la búsqueda al encontrar la primera
+                break
         except Exception as e:
             print(f"⚠️ Error en {type(scraper).__name__}: {e}")
             continue
 
-    if not noticia_seleccionada:
-        print("📭 No se encontraron noticias nuevas que coincidan con config.py")
+    if not noticia:
+        print("📭 Sin noticias nuevas que coincidan con las categorías configuradas.")
         return
 
-    # 3. Redacción del Tweet
-    print("✍️  Redactando tweet...")
-    writer = WriterAgent()
-    # Usamos el parámetro mode="noticia" para activar el prompt de periodista
-    tweet_text = writer.redactar(noticia_seleccionada, mode="noticia")
+    # 2. Adaptamos la noticia al formato que espera writer_agent
+    repo_like = {
+        "name": noticia["title"],
+        "description": noticia["title"],
+        "url": noticia["url"],
+    }
 
-    # 4. Generación de Imagen
-    print("🎨 Generando imagen temática...")
-    artista = ImageAgent()
-    # Usamos el título de la noticia como base para la imagen
-    ruta_imagen = artista.generar(noticia_seleccionada['title'], mode="noticia")
+    # 3. Generar tweet en modo "single" (formato más apropiado para noticias)
+    print("✍️ Redactando tweet...")
+    try:
+        tweet_text = generate_tweet_with_ai(repo_like, modo="single")
+    except Exception as e:
+        print(f"❌ Error generando tweet: {e}")
+        return
 
-    # 5. Publicación final
-    print(f"📤 Publicando en X...")
-    print(f"--- TWEET ---\n{tweet_text}\n--------------")
-    
-    # Descomenta esta línea cuando estés listo para publicar de verdad:
-    # publicar_en_x(tweet_text, ruta_imagen)
-    
-    print("🎯 ¡Proceso de noticias finalizado con éxito!")
+    # 4. Guardar tweet para que twitter_bot lo publique
+    output_path = os.path.join(BASE_DIR, "tweet_single.txt")
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(tweet_text.replace('"', ""))
+    print(f"✅ Tweet guardado en: tweet_single.txt")
+
+    # 5. Generar imagen basada en el tweet
+    print("🎨 Generando imagen...")
+    try:
+        v_prompt = generate_visual_prompt(tweet_text)
+        download_hf_image(v_prompt, modo="single")
+    except Exception as e:
+        print(f"⚠️ Error generando imagen: {e} — continuando sin imagen.")
+
+    print("🎯 Flujo de noticias completado.")
+    print("--- TWEET GENERADO ---")
+    print(tweet_text)
+    print("----------------------")
+
 
 if __name__ == "__main__":
     ejecutar_noticias()
