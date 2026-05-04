@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stars Manager Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Stars Manager Dashboard</h1>
+        <p>Explora el crecimiento de tu repositorio.</p>
+    </header>
+
+    <main>
+        <section id="kpis">
+            <h2>Datos Clave</h2>
+            <div class="kpi">
+                <span class="label">Stars:</span>
+                <span id="stars" class="value">Cargando...</span>
+            </div>
+            <div class="kpi">
+                <span class="label">Forks:</span>
+                <span id="forks" class="value">Cargando...</span>
+            </div>
+            <div class="kpi">
+                <span class="label">Watchers:</span>
+                <span id="watchers" class="value">Cargando...</span>
+            </div>
+        </section>
+
+        <section id="growth">
+            <h2>Crecimiento</h2>
+            <canvas id="growthChart"></canvas> <!-- Aquí irá la gráfica -->
+        </section>
+
+        <section id="insights">
+            <h2>Insights</h2>
+            <p id="insightMessage">Cargando...</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Stars Manager</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
