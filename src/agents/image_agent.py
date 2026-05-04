@@ -96,7 +96,12 @@ OUTPUT RULES:
 
 
 def generate_visual_prompt(tweet_content: str) -> str:
-    client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+    groq_api_key = os.environ.get("GROQ_API_KEY")
+    if not groq_api_key:
+        print("⚠️ GROQ_API_KEY no configurado. Usando prompt visual fallback determinístico.")
+        return VISUAL_IDENTITY
+
+    client = Groq(api_key=groq_api_key)
 
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
@@ -169,7 +174,12 @@ def main():
         print("❌ El archivo de tweet está vacío.")
         return
 
-    v_prompt = generate_visual_prompt(content)
+    try:
+        v_prompt = generate_visual_prompt(content)
+    except Exception as e:
+        print(f"❌ Error generando visual prompt con Groq: {e}")
+        print("🧹 Finalizando ejecución de forma segura.")
+        return
 
     # Log de auditoría — muestra qué estilo eligió el LLM para cada tweet
     style_detected = next(
