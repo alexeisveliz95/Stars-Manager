@@ -62,4 +62,4 @@ CATEGORIES_DB = {
 }
 
 # Keywords para trabajar con otros modulos posterriormente
-ALL_KEYWORDS = [keyword for keywords in CATEGORIES_DB.values() for keyword in keywords]
+ALL_KEYWORDS = [kw for keywords in CATEGORIES_DB.values() for kw in keywords]

@@ -3,67 +3,75 @@ import json
 import os
 from config import ALL_KEYWORDS
 
-class NewsScraper:
+# Renombrada a HNScraper y método a fetch_news() para consistencia con el orquestador
+class HNScraper:
     def __init__(self):
         self.base_url = "https://hacker-news.firebaseio.com/v0"
         self.history_file = "data/news_history.json"
 
     def _load_history(self):
         if os.path.exists(self.history_file):
-            with open(self.history_file, 'r') as f:
+            with open(self.history_file, "r") as f:
                 return json.load(f)
         return []
 
     def _save_history(self, news_id):
         history = self._load_history()
         history.append(news_id)
-        # Mantener solo los últimos 100 para no pesar
-        with open(self.history_file, 'w') as f:
-            json.dump(history[-100:], f)
+        os.makedirs(os.path.dirname(self.history_file), exist_ok=True)
+        with open(self.history_file, "w") as f:
+            json.dump(history[-100:], f)  # Máximo 100 entradas
 
-    def fetch_trending_news(self):
-        print("🔎 Buscando noticias que encajen con tus categorías...")
+    def fetch_news(self):
+        print("🔎 HNScraper: Buscando noticias relevantes...")
         history = self._load_history()
-        
+
         try:
-            # Obtener los IDs de las 50 noticias más top
-            top_ids = requests.get(f"{self.base_url}/topstories.json").json()[:50]
-            
+            response = requests.get(
+                f"{self.base_url}/topstories.json", timeout=10
+            )
+            if response.status_code != 200:
+                print(f"❌ HNScraper: HTTP {response.status_code}")
+                return None
+
+            top_ids = response.json()[:50]
+
             for item_id in top_ids:
                 if item_id in history:
                     continue
-                
-                # Obtener detalle de la noticia
-                item = requests.get(f"{self.base_url}/item/{item_id}.json").json()
+
+                item_resp = requests.get(
+                    f"{self.base_url}/item/{item_id}.json", timeout=10
+                )
+                if item_resp.status_code != 200:
+                    continue
+
+                item = item_resp.json()
+                if not item:
+                    continue
+
                 title = item.get("title", "")
                 url = item.get("url")
 
                 if not url or not title:
                     continue
 
-                title_lower = title.lower()
-                if any(kw.lower() in title_lower for kw in ALL_KEYWORDS):
-                    print(f"🎯 ¡Match encontrado!: {title}")
-                    
-                    # Guardamos en el historial para no repetir
+                if any(kw.lower() in title.lower() for kw in ALL_KEYWORDS):
+                    print(f"🎯 Match en HN: {title}")
                     self._save_history(item_id)
-                    
                     return {
                         "title": title,
                         "url": url,
                         "source": "Hacker News",
-                        "id": item_id
+                        "id": item_id,
                     }
-            
-            print("--- No se encontraron noticias nuevas con tus keywords ---")
+
+            print("ℹ️ HNScraper: Sin noticias nuevas que coincidan.")
             return None
 
+        except requests.Timeout:
+            print("⚠️ HNScraper: Timeout al conectar con Hacker News.")
+            return None
         except Exception as e:
-            print(f"❌ Error en NewsScraper: {e}")
+            print(f"❌ HNScraper: {e}")
             return None
-
-if __name__ == "__main__":
-    scraper = NewsScraper()
-    noticia = scraper.fetch_trending_news()
-    if noticia:
-        print(f"Noticia lista para procesar: {noticia['title']}")
