@@ -1,41 +1,43 @@
 import feedparser
 import time
-from src.config import ALL_KEYWORDS
+from config import ALL_KEYWORDS
 
 class RSSScraper:
     def __init__(self):
-        # Lista de feeds confiables
         self.feeds = [
             "https://techcrunch.com/feed/",
             "https://www.theverge.com/rss/frontpage/index.xml",
-            "https://www.wired.com/feed/rss"
+            "https://www.wired.com/feed/rss",
         ]
 
     def fetch_news(self):
         print("📰 RSSScraper: Revisando feeds de noticias...")
-        
+
         for url in self.feeds:
             try:
                 feed = feedparser.parse(url)
-                
+
                 for entry in feed.entries:
-                    title = entry.title
-                    link = entry.link
-                    
-                    # Filtrado por keywords de config.py
+                    title = entry.get("title", "")
+                    link = entry.get("link", "")
+
+                    if not title or not link:
+                        continue
+
                     if any(kw.lower() in title.lower() for kw in ALL_KEYWORDS):
-                        print(f"🎯 Match en RSS ({url}): {title}")
-                        
+                        print(f"🎯 Match en RSS: {title}")
                         return {
                             "title": title,
                             "url": link,
                             "source": "Tech News",
-                            "id": link # Usamos la URL como ID único para el historial
+                            "id": link,  # URL como ID único
                         }
-                
-                time.sleep(1) # Respeto entre feeds
+
+                time.sleep(1)
 
             except Exception as e:
-                print(f"❌ Error leyendo feed {url}: {e}")
-        
+                print(f"❌ RSSScraper error en {url}: {e}")
+                continue
+
+        print("ℹ️ RSSScraper: Sin noticias nuevas que coincidan.")
         return None
