@@ -10,6 +10,7 @@ from scrapers.reddit_scraper import RedditScraper
 from scrapers.rss_scraper import RSSScraper
 from agents.writer_agent import generate_tweet_with_ai
 from agents.image_agent import generate_visual_prompt, download_hf_image
+from social.twitter_bot import post_content
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -73,6 +74,14 @@ def ejecutar_noticias():
     print("--- TWEET GENERADO ---")
     print(tweet_text)
     print("----------------------")
+
+    print(f"📤 Koda está publicando en X...")
+    try:
+    # ASEGÚRATE DE QUE ESTA LÍNEA NO TENGA EL '#' AL PRINCIPIO
+        post_content(tweet_text) 
+        print("🎯 ¡Post publicado con éxito!")
+    except Exception as e:
+        print(f"❌ Error al publicar en X: {e}")
 
 
 if __name__ == "__main__":
