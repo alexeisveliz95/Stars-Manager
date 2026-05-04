@@ -61,6 +61,12 @@ def post_content(file_name):
         parts = [p.strip() for p in content.split("---") if p.strip()]
         media_ids = [media_id] if media_id else None
 
+        if not parts:
+            print(f"⚠️ {file_name}: archivo vacío o sin contenido publicable.")
+            # Limpieza opcional para evitar reintentos sobre contenido inválido
+            os.remove(TWEET_FILE)
+            return
+
         if len(parts) < 2:
             client_v2.create_tweet(text=parts[0], media_ids=media_ids)
         else:
