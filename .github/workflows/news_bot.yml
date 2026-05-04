@@ -41,11 +41,15 @@ jobs:
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
         run: python src/agents/news_orquestador.py
 
-      - name: Save news history
+      - name: Save news history to Repo
+        if: always()
         # Importante: Esto guarda el news_history.json para no repetir noticias
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git add data/news_history.json
+          git add data/history_images/*.png || true
+          git add data/*.json || true
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📸 Archivo de post y assets: $(date +'%Y-%m-%d %H:%M:%S')" && git push)
           git commit -m "update: actualizar historial de noticias [skip ci]" || echo "No changes to commit"
           git push
