@@ -78,7 +78,7 @@ def ejecutar_noticias():
     print(f"📤 Koda activando la publicación en X...")
     try:
         # twitter_bot_3.py busca automáticamente la imagen correspondiente al texto
-        script_twitter = os.path.join(BASE_DIR, "src", "utils", "twitter_bot.py")
+        script_twitter = os.path.join(BASE_DIR, "src", "social", "twitter_bot.py")
         subprocess.run(["python", script_twitter, archivo_texto], check=True)
         print("🎯 ¡Koda ha publicado la noticia con éxito!")
     except Exception as e:
