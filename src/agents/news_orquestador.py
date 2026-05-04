@@ -4,9 +4,9 @@ import sys
 # Aseguramos que Python encuentre la carpeta src
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.agents.scrapers.hn_scraper import HNScraper
-from src.agents.scrapers.reddit_scraper import RedditScraper
-from src.agents.scrapers.rss_scraper import RSSScraper
+from src.scrapers.hn_scraper import HNScraper
+from src.scrapers.reddit_scraper import RedditScraper
+from src.scrapers.rss_scraper import RSSScraper
 from src.agents.writer_agent import WriterAgent
 from src.agents.image_agent import ImageAgent
 # Importa aquí tu función real de twitter_bot
