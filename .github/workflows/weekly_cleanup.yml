@@ -22,7 +22,7 @@ jobs:
           cache: 'pip' # Acelera las ejecuciones guardando las librerías
 
       - name: Run cleanup script
-        run: python scripts/clean_history.py
+        run: python src/utils/clean_history.py
 
       - name: Commit and Push changes
         run: |

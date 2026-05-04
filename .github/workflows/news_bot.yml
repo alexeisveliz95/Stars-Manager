@@ -39,7 +39,7 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
-        run: python news_orquestador.py
+        run: python src/agents/news_orquestador.py
 
       - name: Save news history
         # Importante: Esto guarda el news_history.json para no repetir noticias
