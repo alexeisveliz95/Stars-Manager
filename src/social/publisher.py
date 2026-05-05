@@ -27,7 +27,7 @@ class PlatformProfile:
 # ---------------------------------------------------------------------------
 
 PROFILES: dict[str, PlatformProfile] = {
-    "x": PlatformProfile(
+    "twitter": PlatformProfile(
         max_chars       = 280,
         supports_markdown = False,
         supports_threads  = True,
