@@ -1,26 +1,23 @@
-name: 📰 Koda News Agent (Asíncrono)
+name: 📰 Stellar News Agent (Asíncrono)
 
-#on:
-  #schedule:
-    # Se ejecuta cada 6 horas (00:00, 06:00, 12:00, 18:00 UTC)
-    # Puedes ajustarlo en https://crontab.guru/
-    #- cron: '0 */6 * * *'
-  
-  #workflow_dispatch: # Permite que lo ejecutes manualmente desde la pestaña Actions
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
   run-news-bot:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip' # Acelera las ejecuciones guardando las librerías
+          cache: 'pip'
 
       - name: Install dependencies
         run: |
@@ -29,27 +26,28 @@ jobs:
 
       - name: Run News Orquestador
         env:
-          # Configura aquí todas tus API Keys (deben estar en Settings > Secrets)
           STARS_TOKEN: ${{ secrets.STARS_TOKEN }}
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
-          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
-          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          # Content channel — posts published here after X
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          # Stellar channel — live log stream
+          STELLAR_BOT_TOKEN: ${{ secrets.STELLAR_BOT_TOKEN }}
+          STELLAR_CHANNEL_ID: ${{ secrets.STELLAR_CHANNEL_ID }}
         run: python src/agents/news_orquestador.py
 
       - name: Save news history to Repo
         if: always()
-        # Importante: Esto guarda el news_history.json para no repetir noticias
         run: |
           git config --local user.name "github-actions[bot]"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/news_history.json
+          git add data/news_history.json || true
           git add data/history_images/*.png || true
           git add data/*.json || true
-          git diff --quiet && git diff --staged --quiet || (git commit -m "📸 Archivo de post y assets: $(date +'%Y-%m-%d %H:%M:%S')" && git push)
-          git commit -m "update: actualizar historial de noticias [skip ci]" || echo "No changes to commit"
-          git push
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📰 News post archivado: $(date +'%Y-%m-%d %H:%M:%S') [skip ci]" && git push)
