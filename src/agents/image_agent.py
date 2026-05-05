@@ -98,7 +98,7 @@ OUTPUT RULES:
 def generate_visual_prompt(tweet_content: str) -> str:
     groq_api_key = os.environ.get("GROQ_API_KEY")
     if not groq_api_key:
-        print("⚠️ GROQ_API_KEY no configurado. Usando prompt visual fallback determinístico.")
+        print("⚠️  GROQ_API_KEY no configurado. Usando prompt visual fallback determinístico.")
         return VISUAL_IDENTITY
 
     client = Groq(api_key=groq_api_key)
@@ -147,7 +147,7 @@ def download_hf_image(visual_prompt: str, modo: str) -> bool:
 
         image.save(temp_output)
 
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        timestamp    = datetime.now().strftime("%Y%m%d_%H%M%S")
         history_path = os.path.join(history_dir, f"{timestamp}_{modo}.png")
         shutil.copy2(temp_output, history_path)
 
@@ -160,11 +160,23 @@ def download_hf_image(visual_prompt: str, modo: str) -> bool:
 
 
 def main():
+    # ── Stellar monitoring ────────────────────────────────────────────────
+    sys.path.insert(0, os.path.join(BASE_DIR, "src"))
+    try:
+        from utils.stellar_logger import setup_stellar_monitoring, notify_workflow_end
+    except ImportError:
+        setup_stellar_monitoring = lambda *a, **k: None
+        notify_workflow_end      = lambda *a, **k: None
+
     modo = sys.argv[1] if len(sys.argv) > 1 else "single"
+    setup_stellar_monitoring(f"🎨 Image Agent [{modo}]")
+    # ─────────────────────────────────────────────────────────────────────
+
     input_file = os.path.join(BASE_DIR, f"tweet_{modo}.txt")
 
     if not os.path.exists(input_file):
         print(f"❌ No se encontró {input_file}")
+        notify_workflow_end(success=False, error=f"Archivo no encontrado: {input_file}")
         return
 
     with open(input_file, "r", encoding="utf-8") as f:
@@ -172,6 +184,7 @@ def main():
 
     if not content:
         print("❌ El archivo de tweet está vacío.")
+        notify_workflow_end(success=False, error="tweet file vacío")
         return
 
     try:
@@ -179,6 +192,7 @@ def main():
     except Exception as e:
         print(f"❌ Error generando visual prompt con Groq: {e}")
         print("🧹 Finalizando ejecución de forma segura.")
+        notify_workflow_end(success=False, error=str(e))
         return
 
     # Log de auditoría — muestra qué estilo eligió el LLM para cada tweet
@@ -188,7 +202,8 @@ def main():
     print(f"🎯 Estilo detectado: {style_detected}")
     print(f"🎨 Prompt generado ({len(v_prompt.split())} palabras):\n{v_prompt}\n")
 
-    download_hf_image(v_prompt, modo)
+    ok = download_hf_image(v_prompt, modo)
+    notify_workflow_end(success=ok, error=None if ok else "Falló la generación de imagen con HuggingFace")
 
 
 if __name__ == "__main__":
