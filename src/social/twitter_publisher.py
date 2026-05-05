@@ -16,6 +16,7 @@ Regenera los access tokens después de cambiar los permisos.
 """
 
 import os
+import re
 import tweepy
 
 from social.publisher import Publisher, PostResult
@@ -38,6 +39,7 @@ class TwitterPublisher(Publisher):
     # El nombre del archivo es twitter_publisher.py por preferencia de estilo —
     # son cosas independientes.
     platform_key = "x"
+    _url_pattern = re.compile(r"https?://\S+", re.IGNORECASE)
 
     def __init__(self):
         self._api_key             = os.getenv("X_API_KEY")
@@ -74,33 +76,50 @@ class TwitterPublisher(Publisher):
         if creds_error:
             return PostResult(success=False, platform=self.platform_key, error=creds_error)
 
-        # 2. Validar contenido contra el perfil de la plataforma
-        warnings = self.validate(text)
+        # 2. Modo ahorro X API: extraemos enlaces para evitar el coste
+        # de "Content: Create (with URL)".
+        sanitized_text, deferred_links = self._strip_links(text)
+
+        # 3. Validar contenido contra el perfil de la plataforma
+        warnings = self.validate(sanitized_text)
         for w in warnings:
             print(f"⚠️  TwitterPublisher: {w}")
 
-        # 3. Subir imagen si existe
+        # 4. Subir imagen si existe
         media_id = None
         if image_path:
             media_id = self._upload_image(image_path)
             if media_id is None:
                 print("⚠️  TwitterPublisher: fallo al subir imagen — publicando solo texto.")
 
-        # 4. Splitear en partes si es hilo
+        # 5. Splitear en partes si es hilo
         separator = self.profile.thread_separator
-        parts = [p.strip() for p in text.split(separator) if p.strip()]
+        parts = [p.strip() for p in sanitized_text.split(separator) if p.strip()]
 
         try:
             if len(parts) <= 1:
-                return self._post_single(parts[0], media_id)
+                result = self._post_single(parts[0], media_id)
             else:
-                return self._post_thread(parts, media_id)
+                result = self._post_thread(parts, media_id)
+
+            if deferred_links:
+                result.metadata["deferred_links"] = deferred_links
+                result.metadata["link_strategy"] = "defer_external_links"
+            return result
         except Exception as e:
             return PostResult(
                 success=False,
                 platform=self.platform_key,
                 error=f"Error inesperado al publicar: {e}",
             )
+
+    def _strip_links(self, text: str) -> tuple[str, list[str]]:
+        """Elimina URLs del texto para evitar el tier caro por publicación con enlace."""
+        links = self._url_pattern.findall(text)
+        cleaned = self._url_pattern.sub("", text)
+        cleaned = "\n".join(line.rstrip() for line in cleaned.splitlines())
+        cleaned = re.sub(r"\n{3,}", "\n\n", cleaned).strip()
+        return cleaned, links
 
     # ------------------------------------------------------------------
     # Estrategias internas
