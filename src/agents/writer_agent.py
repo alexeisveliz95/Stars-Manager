@@ -2,6 +2,7 @@ import sys
 import os
 import json
 import random
+from datetime import datetime, timezone
 from groq import Groq
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -197,16 +198,28 @@ def main():
     # Cargar historial de publicados
     if os.path.exists(history_path):
         with open(history_path, "r", encoding="utf-8") as f:
-            history = json.load(f)
+            raw_history = json.load(f)
     else:
-        history = {"publicados": []}
+        raw_history = {"publicados": []}
+
+    # Backward compatible: migra formato legado a esquema extensible
+    if "published_repo_names" in raw_history:
+        history = raw_history
+    else:
+        old_items = raw_history.get("publicados", [])
+        history = {
+            "version": 2,
+            "published_repo_names": old_items,
+            "published": [],
+            "stats": {"generated_posts": 0},
+        }
 
     # Seleccionar repo no publicado y generar contenido
     tweet_text    = None
     selected_repo = None
 
     for repo in repos:
-        if repo["name"] not in history["publicados"]:
+        if repo["name"] not in history["published_repo_names"]:
             print(f"🧠 Generando '{modo}' para: {repo['name']}...")
             try:
                 tweet_text    = generate_tweet_with_ai(repo, modo)
@@ -230,7 +243,14 @@ def main():
     print("─" * 40)
 
     # Actualizar historial
-    history["publicados"].append(selected_repo)
+    history["published_repo_names"].append(selected_repo)
+    history["published"].append({
+        "repo_name": selected_repo,
+        "mode": modo,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "output_file": os.path.basename(output_path),
+    })
+    history["stats"]["generated_posts"] = history["stats"].get("generated_posts", 0) + 1
     with open(history_path, "w", encoding="utf-8") as f:
         json.dump(history, f, indent=4)
 

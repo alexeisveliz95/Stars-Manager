@@ -18,6 +18,7 @@ import os
 import sys
 import shutil
 from datetime import datetime
+from social.publish_log import append_publish_event
 
 # ---------------------------------------------------------------------------
 # Rutas base
@@ -140,6 +141,23 @@ def run(modo: str, platforms: list[str]):
 
     # 3. Limpieza — solo si al menos una plataforma publicó correctamente
     any_success = any(r.success for r in results)
+
+    append_publish_event(
+        base_dir=BASE_DIR,
+        mode=modo,
+        text=text,
+        image_used=bool(image_path),
+        results=[
+            {
+                "platform": r.platform,
+                "success": r.success,
+                "post_id": r.post_id,
+                "error": r.error,
+                "metadata": r.metadata,
+            }
+            for r in results
+        ],
+    )
 
     if any_success:
         if image_path:
