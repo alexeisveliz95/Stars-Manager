@@ -12,31 +12,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'pip' # Acelera las ejecuciones guardando las librerías
+          cache: 'pip'
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # 1. GENERAR TEXTO (Basado en el prompt específico para este formato)
+      # 1. GENERAR TEXTO
       - name: Generate Content
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          STELLAR_BOT_TOKEN: ${{ secrets.STELLAR_BOT_TOKEN }}
+          STELLAR_CHANNEL_ID: ${{ secrets.STELLAR_CHANNEL_ID }}
         run: python src/agents/writer_agent.py "single"
 
-      # 2. GENERAR IMAGEN (Basada en el texto recién creado)
+      # 2. GENERAR IMAGEN
       - name: Generate Image
         if: success()
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          STELLAR_BOT_TOKEN: ${{ secrets.STELLAR_BOT_TOKEN }}
+          STELLAR_CHANNEL_ID: ${{ secrets.STELLAR_CHANNEL_ID }}
         run: python src/agents/image_agent.py "single"
 
-      # 3. PUBLICAR EN X (Con texto e imagen)
+      # 3. PUBLICAR EN X + replicar en Telegram content channel
       - name: Post to X
         if: success()
         env:
@@ -44,9 +48,13 @@ jobs:
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          STELLAR_BOT_TOKEN: ${{ secrets.STELLAR_BOT_TOKEN }}
+          STELLAR_CHANNEL_ID: ${{ secrets.STELLAR_CHANNEL_ID }}
         run: python src/social/twitter_bot.py "tweet_single.txt"
 
-      # 4. SUBIR ARTEFACTO (Para revisión manual en GitHub)
+      # 4. ARTEFACTOS para revisión manual
       - name: Upload Artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -56,13 +64,11 @@ jobs:
             tweet_single.txt
             image_single.png
 
-
       - name: Save History to Repo
         if: always()
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          # Agregamos el historial de imágenes y cualquier cambio en data/
           git add data/history_images/*.png || true
           git add data/*.json || true
           git diff --quiet && git diff --staged --quiet || (git commit -m "📸 Archivo de post y assets: $(date +'%Y-%m-%d %H:%M:%S')" && git push)
