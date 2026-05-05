@@ -9,8 +9,8 @@ Uso desde workflow / CLI:
     python src/social/post_runner.py <modo> <plataforma> [<plataforma> ...]
 
 Ejemplos:
-    python src/social/post_runner.py single x
-    python src/social/post_runner.py single x telegram
+    python src/social/post_runner.py single twitter
+    python src/social/post_runner.py single twitter telegram
     python src/social/post_runner.py thread telegram
 """
 
@@ -36,15 +36,15 @@ def _get_publisher(platform: str):
     Instancia el publisher correspondiente a la plataforma solicitada.
     Importación diferida para no cargar dependencias innecesarias.
     """
-    if platform == "x":
-        from social.x_publisher import XPublisher
-        return XPublisher()
+    if platform == "twitter":
+        from social.twitter_publisher import TwitterPublisher
+        return TwitterPublisher()
     if platform == "telegram":
         from social.telegram_publisher import TelegramPublisher
         return TelegramPublisher()
     raise ValueError(
         f"Plataforma '{platform}' no reconocida. "
-        f"Plataformas disponibles: x, telegram"
+        f"Plataformas disponibles: twitter, telegram"
     )
 
 # ---------------------------------------------------------------------------
@@ -100,7 +100,7 @@ def run(modo: str, platforms: list[str]):
 
     Args:
         modo:      Formato del contenido ("single", "list", "thread").
-        platforms: Lista de plataformas destino ("x", "telegram", ...).
+        platforms: Lista de plataformas destino ("twitter", "telegram", ...).
 
     Flujo:
         1. Leer texto generado por writer_agent
@@ -168,16 +168,16 @@ if __name__ == "__main__":
     """
     Argumentos:
         sys.argv[1]   — modo: "single" | "list" | "thread"
-        sys.argv[2:]  — plataformas: "x" | "telegram" | ambas
+        sys.argv[2:]  — plataformas: "twitter" | "telegram" | ambas
 
     Ejemplos:
-        python src/social/post_runner.py single x
-        python src/social/post_runner.py single x telegram
+        python src/social/post_runner.py single twitter
+        python src/social/post_runner.py single twitter telegram
         python src/social/post_runner.py thread telegram
     """
     if len(sys.argv) < 3:
         print("Uso: python post_runner.py <modo> <plataforma> [<plataforma> ...]")
-        print("Ejemplo: python post_runner.py single x telegram")
+        print("Ejemplo: python post_runner.py single twitter telegram")
         sys.exit(1)
 
     modo_arg      = sys.argv[1]
