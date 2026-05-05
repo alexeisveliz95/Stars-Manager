@@ -1,7 +1,7 @@
 # 📂 Mobile Development
 
 > [!info] Resumen
-> **3 repos** curados · ⭐ Top: **54.3k** · Acumulado: **58.8k** estrellas · Actualizado: `2026-05-04`
+> **3 repos** curados · ⭐ Top: **54.4k** · Acumulado: **58.9k** estrellas · Actualizado: `2026-05-05`
 
 ---
 
@@ -9,7 +9,7 @@
 
 | Proyecto | ⭐ Stars | Descripción |
 | :--- | ---: | :--- |
-| [**termux-app**](https://github.com/termux/termux-app) | 54.3k | Termux - a terminal emulator application for Android OS extendible by variety of packages. |
+| [**termux-app**](https://github.com/termux/termux-app) | 54.4k | Termux - a terminal emulator application for Android OS extendible by variety of packages. |
 
 ## ⭐ Notable
 
