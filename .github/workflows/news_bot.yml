@@ -1,12 +1,12 @@
 name: 📰 Koda News Agent (Asíncrono)
 
-on:
-  schedule:
+#on:
+  #schedule:
     # Se ejecuta cada 6 horas (00:00, 06:00, 12:00, 18:00 UTC)
     # Puedes ajustarlo en https://crontab.guru/
-    - cron: '0 */6 * * *'
+    #- cron: '0 */6 * * *'
   
-  workflow_dispatch: # Permite que lo ejecutes manualmente desde la pestaña Actions
+  #workflow_dispatch: # Permite que lo ejecutes manualmente desde la pestaña Actions
 
 jobs:
   run-news-bot:
