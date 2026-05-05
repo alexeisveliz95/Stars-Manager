@@ -1,5 +1,6 @@
 requests
 pydantic
+pydantic-settings
 beautifulsoup4
 lxml
 groq
@@ -7,3 +8,5 @@ tweepy
 huggingface_hub
 pillow
 feedparser
+typer[all]
+rich
