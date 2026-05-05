@@ -86,9 +86,9 @@ def ejecutar_noticias():
     # 6. Twitter Bot
     print("📤 Stellar activando la publicación en X...")
     try:
-        script_twitter = os.path.join(BASE_DIR, "src", "social", "twitter_bot.py")
+        script_twitter = os.path.join(BASE_DIR, "src", "social", "post_runner.py")
         if not os.path.exists(script_twitter):
-            raise FileNotFoundError(f"twitter_bot.py no encontrado en: {script_twitter}")
+            raise FileNotFoundError(f"post_runner.py no encontrado en: {script_twitter}")
         subprocess.run(["python", script_twitter, archivo_texto], check=True)
         print("🎯 ¡Stellar ha publicado la noticia con éxito!")
         notify_workflow_end(success=True)
