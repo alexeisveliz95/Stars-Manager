@@ -148,7 +148,7 @@ def generate_tweet_with_ai(repo: dict, modo: str) -> str:
         )
         return response.choices[0].message.content.strip()
     except Exception as e:
-        print(f"⚠️ Fallback a Qwen por error en Llama: {e}")
+        print(f"⚠️  Fallback a Qwen por error en Llama: {e}")
         response = client.chat.completions.create(
             model="qwen/qwen3-32b",
             messages=messages,
@@ -161,15 +161,27 @@ def generate_tweet_with_ai(repo: dict, modo: str) -> str:
 # ---------------------------------------------------------------------------
 
 def main():
+    # ── Stellar monitoring ────────────────────────────────────────────────
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + "/../..")
+    try:
+        from src.utils.stellar_logger import setup_stellar_monitoring, notify_workflow_end
+    except ImportError:
+        # Fallback when running from inside src/
+        sys.path.insert(0, os.path.join(BASE_DIR, "src"))
+        from utils.stellar_logger import setup_stellar_monitoring, notify_workflow_end
+
     modo = sys.argv[1] if len(sys.argv) > 1 else "single"
+    setup_stellar_monitoring(f"📝 Writer Agent [{modo}]")
+    # ─────────────────────────────────────────────────────────────────────
 
     if modo not in PROMPT_BUILDERS:
         print(f"❌ Modo '{modo}' no válido. Usa: {list(PROMPT_BUILDERS.keys())}")
+        notify_workflow_end(success=False, error=f"Modo inválido: {modo}")
         sys.exit(1)
 
-    trends_path = os.path.join(BASE_DIR, "data", "top_repo_list.json")
+    trends_path  = os.path.join(BASE_DIR, "data", "top_repo_list.json")
     history_path = os.path.join(BASE_DIR, "data", "history.json")
-    output_path = os.path.join(BASE_DIR, f"tweet_{modo}.txt")
+    output_path  = os.path.join(BASE_DIR, f"tweet_{modo}.txt")
 
     # Cargar pool de repos
     try:
@@ -177,7 +189,9 @@ def main():
             repos = json.load(f)
             random.shuffle(repos)
     except FileNotFoundError:
-        print(f"❌ No se encontró el pool de repos en: {trends_path}")
+        msg = f"No se encontró el pool de repos en: {trends_path}"
+        print(f"❌ {msg}")
+        notify_workflow_end(success=False, error=msg)
         sys.exit(1)
 
     # Cargar historial de publicados
@@ -188,14 +202,14 @@ def main():
         history = {"publicados": []}
 
     # Seleccionar repo no publicado y generar contenido
-    tweet_text = None
+    tweet_text    = None
     selected_repo = None
 
     for repo in repos:
         if repo["name"] not in history["publicados"]:
             print(f"🧠 Generando '{modo}' para: {repo['name']}...")
             try:
-                tweet_text = generate_tweet_with_ai(repo, modo)
+                tweet_text    = generate_tweet_with_ai(repo, modo)
                 selected_repo = repo["name"]
                 break
             except Exception as e:
@@ -203,7 +217,8 @@ def main():
                 continue
 
     if not tweet_text:
-        print(f"ℹ️ No hay repos nuevos para el modo '{modo}'.")
+        print(f"ℹ️  No hay repos nuevos para el modo '{modo}'.")
+        notify_workflow_end(success=True)
         sys.exit(0)
 
     # Guardar resultado
@@ -221,6 +236,7 @@ def main():
 
     print(f"✅ Generado: tweet_{modo}.txt")
     print(f"✅ Historial actualizado: {selected_repo}")
+    notify_workflow_end(success=True)
 
 
 if __name__ == "__main__":
