@@ -3,6 +3,8 @@ from models import Repo
 from config.settings import settings
 
 def get_starred_repos() -> list[Repo]:
+    settings.require_github()
+
     repos = []
     page = 1
     headers = {

@@ -18,7 +18,8 @@ import os
 import sys
 import shutil
 from datetime import datetime
-from connectors.inputs.outputs.publish_log import append_publish_event
+from config.settings import settings
+from connectors.outputs.publish_log import append_publish_event
 
 # ---------------------------------------------------------------------------
 # Rutas base
@@ -38,10 +39,12 @@ def _get_publisher(platform: str):
     Importación diferida para no cargar dependencias innecesarias.
     """
     if platform == "twitter":
-        from connectors.inputs.outputs.twitter_publisher import TwitterPublisher
+        settings.require_x()
+        from connectors.outputs.twitter_publisher import TwitterPublisher
         return TwitterPublisher()
     if platform == "telegram":
-        from connectors.inputs.outputs.telegram_publisher import TelegramPublisher
+        settings.require_telegram()
+        from connectors.outputs.telegram_publisher import TelegramPublisher
         return TelegramPublisher()
     raise ValueError(
         f"Plataforma '{platform}' no reconocida. "

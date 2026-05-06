@@ -4,6 +4,7 @@ import json
 import random
 from datetime import datetime, timezone
 from groq import Groq
+from config.settings import settings
 
 from config.settings import settings
 

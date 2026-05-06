@@ -4,6 +4,7 @@ import shutil
 from datetime import datetime
 from groq import Groq
 from huggingface_hub import InferenceClient
+from config.settings import settings
 
 from config.settings import settings
 
@@ -103,7 +104,7 @@ def generate_visual_prompt(tweet_content: str) -> str:
         print("⚠️  GROQ_API_KEY no configurado. Usando prompt visual fallback determinístico.")
         return VISUAL_IDENTITY
 
-    client = Groq(api_key=groq_api_key)
+    client = Groq(api_key=settings.groq_api_key)
 
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
@@ -133,7 +134,7 @@ def download_hf_image(visual_prompt: str, modo: str) -> bool:
             print("❌ ERROR: HF_TOKEN no configurado.")
             return False
 
-        client = InferenceClient(api_key=token.strip())
+        client = InferenceClient(api_key=settings.hf_token.strip())
         print("📡 Generando imagen con FLUX.1-schnell...")
 
         image = client.text_to_image(
