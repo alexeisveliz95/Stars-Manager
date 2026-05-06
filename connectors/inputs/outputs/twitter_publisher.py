@@ -19,7 +19,7 @@ import os
 import re
 import tweepy
 
-from social.publisher import Publisher, PostResult
+from connectors.inputs.outputs.publisher import Publisher, PostResult
 
 
 class TwitterPublisher(Publisher):

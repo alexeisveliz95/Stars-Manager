@@ -5,9 +5,9 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(os.path.join(BASE_DIR, "src"))
 
-from scrapers.hn_scraper import HNScraper        # noqa: E402
-from scrapers.reddit_scraper import RedditScraper  # noqa: E402
-from scrapers.rss_scraper import RSSScraper        # noqa: E402
+from connectors.inputs.hn_scraper import HNScraper        # noqa: E402
+from connectors.inputs.reddit_scraper import RedditScraper  # noqa: E402
+from connectors.inputs.rss_scraper import RSSScraper        # noqa: E402
 from agents.writer_agent import generate_tweet_with_ai  # noqa: E402
 
 
