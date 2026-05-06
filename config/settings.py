@@ -11,6 +11,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 
+
 class Settings(BaseSettings):
     """Runtime configuration loaded from environment variables and ``.env``.
 

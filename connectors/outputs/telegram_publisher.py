@@ -1,7 +1,8 @@
 import os
 import requests
 
-from connectors.inputs.outputs.publisher import Publisher, PostResult
+from config.settings import settings
+from connectors.outputs.publisher import Publisher, PostResult
 
 # ---------------------------------------------------------------------------
 # Límites internos de la API de Telegram
@@ -39,8 +40,8 @@ class TelegramPublisher(Publisher):
                         Se ignora si el texto no contiene marcado.
         """
         self.parse_mode = parse_mode
-        self._token = os.getenv("TELEGRAM_BOT_TOKEN")
-        self._channel_id = os.getenv("TELEGRAM_CHANNEL_ID")
+        self._token = settings.telegram_bot_token
+        self._channel_id = settings.telegram_channel_id
 
     # ------------------------------------------------------------------
     # Interfaz pública
