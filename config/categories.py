@@ -1,8 +1,3 @@
-import os
-
-TOKEN = os.getenv("STARS_TOKEN")
-USER = os.getenv("GITHUB_REPOSITORY_OWNER")
-
 # NOTA: el orden de las categorías define la prioridad de clasificación.
 # Un repo que matchea múltiples categorías cae en la primera que aparece aquí.
 # Las categorías más específicas deben ir antes que las generales.
@@ -61,5 +56,5 @@ CATEGORIES_DB = {
     ],
 }
 
-# Keywords para trabajar con otros modulos posterriormente
+# Keywords para trabajar con otros módulos posteriormente.
 ALL_KEYWORDS = [kw for keywords in CATEGORIES_DB.values() for kw in keywords]

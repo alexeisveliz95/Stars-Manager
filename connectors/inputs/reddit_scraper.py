@@ -2,7 +2,7 @@ import requests
 import json
 import os
 import time
-from config import ALL_KEYWORDS
+from config.categories import ALL_KEYWORDS
 
 class RedditScraper:
     def __init__(self):
