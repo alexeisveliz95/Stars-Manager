@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 from groq import Groq
 from config.settings import settings
 
+from config.settings import settings
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # ---------------------------------------------------------------------------
@@ -127,8 +129,11 @@ PROMPT_BUILDERS = {
 
 
 def generate_tweet_with_ai(repo: dict, modo: str) -> str:
-    settings.require_groq()
-    client = Groq(api_key=settings.groq_api_key)
+    groq_api_key = settings.groq_api_key
+    if not groq_api_key:
+        raise ValueError("GROQ_API_KEY no configurado.")
+
+    client = Groq(api_key=groq_api_key)
 
     builder = PROMPT_BUILDERS.get(modo)
     if not builder:

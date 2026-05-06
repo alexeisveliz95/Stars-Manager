@@ -13,10 +13,7 @@ def get_starred_repos() -> list[Repo]:
     }
 
     while True:
-        url = (
-            f"https://api.github.com/users/{settings.github_repository_owner}/starred"
-            f"?page={page}&per_page=100"
-        )
+        url = f"https://api.github.com/users/{settings.github_repository_owner}/starred?page={page}&per_page=100"
 
         try:
             response = requests.get(url, headers=headers, timeout=15)

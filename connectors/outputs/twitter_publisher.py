@@ -43,7 +43,6 @@ class TwitterPublisher(Publisher):
     _url_pattern = re.compile(r"https?://\S+", re.IGNORECASE)
 
     def __init__(self):
-        settings.require_x()
         self._api_key             = settings.x_api_key
         self._api_secret          = settings.x_api_secret
         self._access_token        = settings.x_access_token

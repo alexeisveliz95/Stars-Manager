@@ -40,7 +40,6 @@ class TelegramPublisher(Publisher):
                         Se ignora si el texto no contiene marcado.
         """
         self.parse_mode = parse_mode
-        settings.require_telegram()
         self._token = settings.telegram_bot_token
         self._channel_id = settings.telegram_channel_id
 
