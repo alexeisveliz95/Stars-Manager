@@ -1,7 +1,7 @@
 import requests
 import json
 import os
-from config import ALL_KEYWORDS
+from config.categories import ALL_KEYWORDS
 
 # Renombrada a HNScraper y método a fetch_news() para consistencia con el orquestador
 class HNScraper:

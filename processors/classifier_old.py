@@ -1,6 +1,6 @@
 import re
 import math
-from config import CATEGORIES_DB
+from config.categories import CATEGORIES_DB
 
 def clean_text(text):
     if not text: return ""

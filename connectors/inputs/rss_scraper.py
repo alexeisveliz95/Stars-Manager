@@ -1,6 +1,6 @@
 import feedparser
 import time
-from config import ALL_KEYWORDS
+from config.categories import ALL_KEYWORDS
 
 class RSSScraper:
     def __init__(self):
