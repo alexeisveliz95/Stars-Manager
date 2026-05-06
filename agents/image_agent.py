@@ -5,6 +5,8 @@ from datetime import datetime
 from groq import Groq
 from huggingface_hub import InferenceClient
 
+from config.settings import settings
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 ESTILOS_VISUALES = {
@@ -96,7 +98,7 @@ OUTPUT RULES:
 
 
 def generate_visual_prompt(tweet_content: str) -> str:
-    groq_api_key = os.environ.get("GROQ_API_KEY")
+    groq_api_key = settings.groq_api_key
     if not groq_api_key:
         print("⚠️  GROQ_API_KEY no configurado. Usando prompt visual fallback determinístico.")
         return VISUAL_IDENTITY
@@ -126,7 +128,7 @@ def generate_visual_prompt(tweet_content: str) -> str:
 
 def download_hf_image(visual_prompt: str, modo: str) -> bool:
     try:
-        token = os.environ.get("HF_TOKEN")
+        token = settings.hf_token
         if not token:
             print("❌ ERROR: HF_TOKEN no configurado.")
             return False
