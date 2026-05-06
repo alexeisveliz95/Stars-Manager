@@ -6,7 +6,7 @@ import sys
 # Añadimos 'src' al path para que Python encuentre scrapers, processors, etc.
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from connectors.inputs.github_stars import get_starred_repos
+from connectors.inputs.github_starred import get_starred_repos
 from connectors.inputs.trending import get_trending_repos
 <<<<<<< HEAD
 <<<<<<< HEAD
