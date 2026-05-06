@@ -3,7 +3,7 @@ name: Stellar Engine - Frequent Run
 
 on:
   schedule:
-    - cron: '0 */2 * * *'           # Cada 2 horas (12 veces al día)
+    - cron: '0 */8 * * *'           # Cada 8 horas (3 veces al día)
   workflow_dispatch:                # Para ejecutar manualmente
 
 jobs:
