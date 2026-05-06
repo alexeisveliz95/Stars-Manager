@@ -1,31 +1,35 @@
 import re
 from typing import List
 from models.content_item import ContentItem
-from config import CATEGORIES_DB   # ← Usamos tu config original
+
+# Importar desde config más adelante
+CATEGORIES_DB = {
+    "AI": ["llm", "gpt", "llama", "groq", "anthropic", "openai", "deep learning", "neural", "ai "],
+    "Security": ["security", "vulnerability", "exploit", "hackerone", "cve", "pentest", "bug bounty", "rce"],
+    "Tools": ["tool", "cli", "framework", "library", "devtool", "utility"],
+    "DevOps": ["docker", "kubernetes", "terraform", "ansible", "ci/cd"],
+    "Web": ["react", "nextjs", "tailwind", "vue", "svelte", "frontend"],
+    "Data": ["pandas", "sql", "mlops", "analytics"],
+}
 
 def clean_text(text: str) -> str:
     if not text:
         return ""
-    # Limpieza útil para Markdown y X
-    cleaned = text.encode("ascii", "ignore").decode("ascii")
-    return cleaned.replace("|", "-").replace("\n", " ").strip()
+    return text.encode("ascii", "ignore").decode("ascii").replace("\n", " ").replace("|", "-").strip()
 
 
 def classify_item(item: ContentItem) -> ContentItem:
-    """Versión mejorada: combina lo bueno de classifier_old + ContentItem"""
-    text_to_analyze = f"{item.title} {item.summary or ''} {' '.join(item.tags)}"
-    text_clean = clean_text(text_to_analyze).lower()
+    """Clasificación potente y prioritaria."""
+    text = clean_text(f"{item.title} {item.summary or ''}").lower()
 
-    # Priorizamos por orden de CATEGORIES_DB (importante)
     for category, keywords in CATEGORIES_DB.items():
-        if any(re.search(r'\b' + re.escape(kw.lower()) + r'\b', text_clean) for kw in keywords):
-            item.add_category(category)
-            item.add_tag(category.lower())
-            break  # Tomamos la primera coincidencia más prioritaria
+        for kw in keywords:
+            if re.search(rf"\b{kw}\b", text):
+                item.add_category(category)
+                item.add_tag(category.lower())
+                return item  # Prioridad alta: tomamos la primera coincidencia fuerte
 
-    if not item.categories:
-        item.add_category("Otros")
-
+    item.add_category("Otros")
     return item
 
 
