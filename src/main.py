@@ -6,8 +6,8 @@ import sys
 # Añadimos 'src' al path para que Python encuentre scrapers, processors, etc.
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from scrapers.github_api import get_starred_repos
-from scrapers.trending import get_trending_repos
+from connectors.inputs.github_stars import get_starred_repos
+from connectors.inputs.trending import get_trending_repos
 from processors.classifier import assign_category, calculate_score
 from processors.markdown_gen import save_all_files, save_trends
 

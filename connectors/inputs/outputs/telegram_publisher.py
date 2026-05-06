@@ -1,7 +1,7 @@
 import os
 import requests
 
-from social.publisher import Publisher, PostResult
+from connectors.inputs.outputs.publisher import Publisher, PostResult
 
 # ---------------------------------------------------------------------------
 # Límites internos de la API de Telegram
