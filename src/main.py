@@ -8,7 +8,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from connectors.inputs.github_stars import get_starred_repos
 from connectors.inputs.trending import get_trending_repos
-from processors.classifier import assign_category, calculate_score
+from processors.classifier_old import assign_category, calculate_score
 from processors.markdown_gen import save_all_files, save_trends
 
 # 2. Configuración de rutas raíz
