@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-from processors.classifier import clean_text
+from processors.classifier_old import clean_text
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
