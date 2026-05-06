@@ -19,7 +19,8 @@ import os
 import re
 import tweepy
 
-from connectors.inputs.outputs.publisher import Publisher, PostResult
+from config.settings import settings
+from connectors.outputs.publisher import Publisher, PostResult
 
 
 class TwitterPublisher(Publisher):
@@ -42,10 +43,10 @@ class TwitterPublisher(Publisher):
     _url_pattern = re.compile(r"https?://\S+", re.IGNORECASE)
 
     def __init__(self):
-        self._api_key             = os.getenv("X_API_KEY")
-        self._api_secret          = os.getenv("X_API_SECRET")
-        self._access_token        = os.getenv("X_ACCESS_TOKEN")
-        self._access_token_secret = os.getenv("X_ACCESS_TOKEN_SECRET")
+        self._api_key             = settings.x_api_key
+        self._api_secret          = settings.x_api_secret
+        self._access_token        = settings.x_access_token
+        self._access_token_secret = settings.x_access_token_secret
 
         # Los clientes se inicializan solo si las credenciales están presentes
         self._api_v1 = None

@@ -31,9 +31,11 @@ Stars-Manager/
 │   │   ├── index.html              # Stars Manager web dashboard (KPIs + growth chart)
 │   │   ├── script.js               # Dashboard data loader (Chart.js, fetches JSON)
 │   │   └── style.css               # Dashboard styles
-│   ├── config.py                   # CATEGORIES_DB + environment variables (TOKEN, USER)
 │   ├── models.py                   # Pydantic data models (Repo)
 │   └── main.py                     # Main orchestrator: sync stars + trending + export JSON
+├── config/
+│   ├── categories.py               # CATEGORIES_DB + ALL_KEYWORDS
+│   └── settings.py                 # environment-backed application settings
 ├── data/
 │   ├── history_images/             # Archived post images (timestamped .png files)
 │   ├── top_repo_list.json          # Active repo pool (top 20 by momentum score)
