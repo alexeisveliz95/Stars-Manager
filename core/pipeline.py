@@ -12,7 +12,7 @@ def full_content_pipeline() -> List[ContentItem]:
     Pipeline completo automático:
     Scrape → Normalize → Classify → Score → Export
     """
-    from connectors.inputs.trending import get_trending_repos
+    from connectors.inputs.github_trending import get_trending_repos
 
     print("🚀 Iniciando Pipeline Completo...")
 

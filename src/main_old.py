@@ -7,7 +7,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from connectors.inputs.github_starred import get_starred_repos
-from connectors.inputs.trending import get_trending_repos
+from connectors.inputs.github_trending import get_trending_repos
 <<<<<<< HEAD
 <<<<<<< HEAD
 from processors.classifier_old import assign_category, calculate_score
