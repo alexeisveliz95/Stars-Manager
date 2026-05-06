@@ -1,32 +1,30 @@
-# processors/classifier.py
 import re
 from typing import List
 from models.content_item import ContentItem
+from config import CATEGORIES_DB   # ← Usamos tu config original
 
-CATEGORIES = {
-    "AI": ["llm", "gpt", "llama", "groq", "openai", "anthropic", "neural", "deep learning"],
-    "Security": ["security", "vulnerability", "exploit", "hackerone", "cve", "pentest", "bug bounty"],
-    "Tools": ["tool", "cli", "framework", "library", "devtool", "utility"],
-    "Web": ["react", "nextjs", "tailwind", "frontend", "vue", "svelte"],
-    "DevOps": ["docker", "kubernetes", "ci/cd", "terraform"],
-    # Agrega más según necesites
-}
+def clean_text(text: str) -> str:
+    if not text:
+        return ""
+    # Limpieza útil para Markdown y X
+    cleaned = text.encode("ascii", "ignore").decode("ascii")
+    return cleaned.replace("|", "-").replace("\n", " ").strip()
+
 
 def classify_item(item: ContentItem) -> ContentItem:
-    """Clasifica y muta el item (retorna para chaining)."""
-    if not item.title and not item.summary:
-        item.add_category("General")
-        return item
+    """Versión mejorada: combina lo bueno de classifier_old + ContentItem"""
+    text_to_analyze = f"{item.title} {item.summary or ''} {' '.join(item.tags)}"
+    text_clean = clean_text(text_to_analyze).lower()
 
-    text = f"{item.title} {item.summary or ''} {str(item.raw_data)}".lower()
-
-    for category, keywords in CATEGORIES.items():
-        if any(re.search(rf"\b{kw}\b", text) for kw in keywords):
+    # Priorizamos por orden de CATEGORIES_DB (importante)
+    for category, keywords in CATEGORIES_DB.items():
+        if any(re.search(r'\b' + re.escape(kw.lower()) + r'\b', text_clean) for kw in keywords):
             item.add_category(category)
             item.add_tag(category.lower())
+            break  # Tomamos la primera coincidencia más prioritaria
 
     if not item.categories:
-        item.add_category("General")
+        item.add_category("Otros")
 
     return item
 
