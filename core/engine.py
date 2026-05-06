@@ -2,8 +2,8 @@ from typing import Dict, Any, Optional
 import asyncio
 from datetime import datetime
 
-from .workflow import Workflow
-from ..connectors.outputs.telegram_logger import TelegramLogger
+from core.workflow import Workflow
+from connectors.outputs.telegram_logger import TelegramLogger
 
 
 class Engine:

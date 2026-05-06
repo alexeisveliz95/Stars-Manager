@@ -1,15 +1,16 @@
-import os
 import requests
 from groq import Groq
-from config import TOKEN
+from config.settings import settings
 
 class ScoutAgent:
     def __init__(self):
-        self.groq_key = os.getenv("GROQ_API_KEY")
+        settings.require_groq()
+        settings.require_github()
+        self.groq_key = settings.groq_api_key
         self.client_groq = Groq(api_key=self.groq_key)
         self.languages = ["python", "typescript", "go", "rust", "csharp", "cpp", "mojo", "zig"]
         self.headers = {
-            "Authorization": f"token {TOKEN}",
+            "Authorization": f"token {settings.stars_token}",
             "Accept": "application/vnd.github.v3+json",
         }
 

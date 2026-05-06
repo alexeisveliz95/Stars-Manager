@@ -3,10 +3,12 @@ import asyncio
 import os
 from datetime import datetime
 
+from config.settings import settings
 from core.pipeline import full_content_pipeline
 from connectors.outputs.telegram_logger import TelegramLogger
 
 async def run_daily_engine():
+    settings.require_telegram("daily_engine")
     start_time = datetime.utcnow()
     
     logger = TelegramLogger()

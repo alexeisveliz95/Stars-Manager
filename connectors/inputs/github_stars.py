@@ -1,17 +1,22 @@
 import requests
 from models import Repo
-from config import TOKEN, USER
+from config.settings import settings
 
 def get_starred_repos() -> list[Repo]:
+    settings.require_github()
+
     repos = []
     page = 1
     headers = {
-        "Authorization": f"token {TOKEN}",
+        "Authorization": f"token {settings.stars_token}",
         "Accept": "application/vnd.github.v3+json",
     }
 
     while True:
-        url = f"https://api.github.com/users/{USER}/starred?page={page}&per_page=100"
+        url = (
+            f"https://api.github.com/users/{settings.github_repository_owner}/starred"
+            f"?page={page}&per_page=100"
+        )
 
         try:
             response = requests.get(url, headers=headers, timeout=15)
