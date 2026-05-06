@@ -1,0 +1,42 @@
+# .github/workflows/daily-engine.yml
+name: Stellar Engine - Frequent Run
+
+on:
+  schedule:
+    - cron: '0 */2 * * *'           # Cada 2 horas (12 veces al día)
+  workflow_dispatch:                # Para ejecutar manualmente
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5              # Seguridad anti-colgamiento
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt --quiet
+
+      - name: Run Stellar Engine
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_LOG_CHAT_ID: ${{ secrets.TELEGRAM_LOG_CHAT_ID }}
+          TELEGRAM_FEED_CHAT_ID: ${{ secrets.TELEGRAM_FEED_CHAT_ID }}
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SECRET }}
+        run: python main.py
+          
